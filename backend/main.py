@@ -173,6 +173,24 @@ async def get_odds_history(
         logger.error(f"Error fetching odds history: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch odds history")
 
+@app.get("/api/price-history/{event_id}")
+async def get_price_history(
+    event_id: str,
+    market_id: str = Query(..., description="Market ID"),
+    team_name: str = Query(..., description="Team name"),
+    hours: int = Query(24, description="Hours to look back")
+):
+    """Get price history for a specific event/market/team for graphing"""
+    try:
+        import uuid
+        market_uuid = uuid.UUID(market_id)
+        
+        history = await get_db_manager().get_price_history(event_id, market_uuid, team_name, hours)
+        return {"history": history, "count": len(history)}
+    except Exception as e:
+        logger.error(f"Error fetching price history: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch price history")
+
 @app.post("/api/odds/changes/{change_id}/flag")
 async def flag_odds_change(
     change_id: str,

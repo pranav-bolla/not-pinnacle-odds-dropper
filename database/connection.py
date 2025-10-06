@@ -137,6 +137,41 @@ class DatabaseManager:
         query = "SELECT id FROM events WHERE event_id = $1"
         result = await self.fetch_one(query, api_event_id)
         return result['id'] if result else None
+
+    async def insert_price_history(self, event_id: uuid.UUID, market_id: uuid.UUID, 
+                                 team_name: str, odds_value: float, point_value: Optional[float] = None, 
+                                 bet_limit: Optional[float] = None) -> None:
+        """Insert price history record"""
+        query = """
+        INSERT INTO price_history (event_id, market_id, team_name, odds_value, point_value, bet_limit)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        """
+        await self.execute_command(query, event_id, market_id, team_name, odds_value, point_value, bet_limit)
+
+    async def get_price_history(self, api_event_id: str, market_id: uuid.UUID, 
+                              team_name: str, hours: int = 24) -> List[Dict[str, Any]]:
+        """Get price history for a specific event/market/team"""
+        query = """
+        SELECT 
+            ph.odds_value,
+            ph.point_value,
+            ph.bet_limit,
+            ph.scraped_at,
+            e.home_team,
+            e.away_team,
+            s.sport_title,
+            m.market_name
+        FROM price_history ph
+        JOIN events e ON ph.event_id = e.id
+        JOIN sports s ON e.sport_id = s.id
+        JOIN markets m ON ph.market_id = m.id
+        WHERE e.event_id = $1 
+        AND ph.market_id = $2 
+        AND ph.team_name = $3
+        AND ph.scraped_at >= CURRENT_TIMESTAMP - INTERVAL '1 hour' * $4
+        ORDER BY ph.scraped_at ASC
+        """
+        return await self.execute_query(query, api_event_id, market_id, team_name, hours)
     
     async def get_current_odds(self, sport_key: Optional[str] = None, 
                               market_key: Optional[str] = None,
@@ -178,8 +213,14 @@ class DatabaseManager:
     
     async def get_recent_changes(self, hours: int = 24, 
                                 min_change_percentage: float = 0.05) -> List[Dict[str, Any]]:
-        """Get recent odds changes"""
+        """Get recent odds changes with both sides of the market for no-vig calculation"""
         query = """
+        WITH current_odds AS (
+            SELECT DISTINCT ON (event_id, market_id, team_name)
+                event_id, market_id, team_name, odds_value
+            FROM odds
+            ORDER BY event_id, market_id, team_name, scraped_at DESC
+        )
         SELECT 
             oc.id,
             e.event_id,
@@ -188,6 +229,8 @@ class DatabaseManager:
             e.commence_time,
             s.sport_title,
             m.market_name,
+            m.market_key,
+            m.id as market_id,
             oc.team_name,
             oc.old_odds,
             oc.new_odds,
@@ -196,7 +239,21 @@ class DatabaseManager:
             oc.point_value,
             oc.change_type,
             oc.detected_at,
-            oc.is_flagged
+            oc.is_flagged,
+            -- Get the other side's current odds for no-vig calculation
+            CASE 
+                WHEN m.market_key = 'h2h' THEN
+                    (SELECT co.odds_value FROM current_odds co 
+                     WHERE co.event_id = oc.event_id 
+                     AND co.market_id = oc.market_id 
+                     AND co.team_name != oc.team_name)
+                WHEN m.market_key IN ('spreads', 'totals') THEN
+                    (SELECT co.odds_value FROM current_odds co 
+                     WHERE co.event_id = oc.event_id 
+                     AND co.market_id = oc.market_id 
+                     AND co.team_name != oc.team_name)
+                ELSE NULL
+            END as other_side_odds
         FROM odds_changes oc
         JOIN events e ON oc.event_id = e.id
         JOIN sports s ON e.sport_id = s.id

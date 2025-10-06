@@ -93,11 +93,26 @@ CREATE TABLE user_preferences (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Price history table for tracking odds over time
+CREATE TABLE price_history (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    event_id UUID REFERENCES events(id) ON DELETE CASCADE,
+    market_id UUID REFERENCES markets(id) ON DELETE CASCADE,
+    team_name VARCHAR(255) NOT NULL,
+    odds_value DECIMAL(10,3) NOT NULL,
+    point_value DECIMAL(10,2),
+    scraped_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Performance indexes
 CREATE INDEX idx_odds_event_market ON odds(event_id, market_id);
 CREATE INDEX idx_odds_scraped_at ON odds(scraped_at DESC);
 CREATE INDEX idx_odds_team_name ON odds(team_name);
 CREATE INDEX idx_odds_value ON odds(odds_value);
+
+CREATE INDEX idx_price_history_event_market_team ON price_history(event_id, market_id, team_name);
+CREATE INDEX idx_price_history_scraped_at ON price_history(scraped_at DESC);
 
 CREATE INDEX idx_odds_changes_event ON odds_changes(event_id);
 CREATE INDEX idx_odds_changes_detected_at ON odds_changes(detected_at DESC);

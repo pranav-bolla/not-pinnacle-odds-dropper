@@ -193,6 +193,7 @@ class PinnacleOddsScraper:
             "oddsFormat": "decimal",
             "commenceTimeFrom": current_time,
             "includeLinks": "true",
+            "includeBetLimits": "true",  # Include bet limits in response
         }
         
         logger.info(f"Fetching featured odds for {sport}")
@@ -272,6 +273,7 @@ class PinnacleOddsScraper:
                             team_name = outcome.get("name")
                             price = outcome.get("price", 0)
                             point = outcome.get("point")
+                            bet_limit = outcome.get("bet_limit")  # Extract bet limit from API response
                             
                             # Convert to American odds
                             american_odds = self.decimal_to_american(price)
@@ -283,6 +285,7 @@ class PinnacleOddsScraper:
                                 'team_name': team_name,
                                 'odds_value': american_odds,
                                 'point_value': point,
+                                'bet_limit': bet_limit,
                                 'bookmaker': 'pinnacle',
                                 'scraped_at': datetime.now(timezone.utc)
                             }
@@ -309,6 +312,18 @@ class PinnacleOddsScraper:
         if odds_records:
             await get_db_manager().insert_odds(odds_records)
             logger.info(f"Inserted {len(odds_records)} odds records into database")
+            
+            # Also store in price history for graphing
+            for record in odds_records:
+                await get_db_manager().insert_price_history(
+                    event_id=record['event_id'],
+                    market_id=record['market_id'],
+                    team_name=record['team_name'],
+                    odds_value=record['odds_value'],
+                    point_value=record.get('point_value'),
+                    bet_limit=record.get('bet_limit')
+                )
+            logger.info(f"Inserted {len(odds_records)} price history records")
         
         return processed_data
     

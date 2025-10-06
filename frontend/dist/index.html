@@ -144,7 +144,6 @@
             <!-- Settings Tab -->
             <div class="tab-content" id="settings-tab">
                 <div class="settings-container">
-                    <h2>Settings</h2>
                     <div class="settings-group">
                         <h3>Change Detection</h3>
                         <div class="setting-item">
@@ -207,18 +206,62 @@
             </div>
         </main>
 
+        <!-- Price History Side Pane -->
+        <div id="price-history-pane" class="price-history-pane">
+            <div class="pane-header">
+                <h3 id="pane-title">Price History</h3>
+                <button id="close-pane" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="pane-content">
+                <div id="price-chart-container" class="chart-container">
+                    <canvas id="price-chart"></canvas>
+                </div>
+                <div id="price-history-table-container" class="table-container">
+                    <table id="price-history-table" class="price-history-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Price</th>
+                                <th>Limit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="price-history-tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- Toast Notifications -->
         <div class="toast-container" id="toast-container"></div>
 
         <!-- Loading Overlay -->
         <div class="loading-overlay" id="loading-overlay">
-            <div class="loading-spinner">
-                <i class="fas fa-spinner fa-spin"></i>
-                <span>Loading...</span>
+            <div class="loading-container">
+                <div class="loading-logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>POD</span>
+                </div>
+                <div class="loading-animation">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring delay-1"></div>
+                    <div class="pulse-ring delay-2"></div>
+                </div>
+                <div class="loading-text">
+                    <span class="loading-dots">
+                        <span>Loading</span>
+                        <span class="dot">.</span>
+                        <span class="dot">.</span>
+                        <span class="dot">.</span>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/app.js"></script>
 </body>
 </html>

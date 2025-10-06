@@ -11,6 +11,7 @@ class PinnacleOddsApp {
         this.reconnectDelay = 1000;
         this.autoRefreshInterval = null;
         this.countdownInterval = null;
+        this.priceChart = null;
         this.currentTab = 'odds';
         this.currentView = 'grid';
         this.settings = {
@@ -120,6 +121,11 @@ class PinnacleOddsApp {
         document.getElementById('reset-settings').addEventListener('click', () => {
             this.resetSettings();
             this.showToast('Settings reset to defaults!', 'info');
+        });
+
+        // Price history pane
+        document.getElementById('close-pane').addEventListener('click', () => {
+            this.closePriceHistoryPane();
         });
 
         // Search
@@ -642,18 +648,30 @@ class PinnacleOddsApp {
         
         // Format times
         const alertTime = new Date(change.detected_at);
-        const alertTimeString = alertTime.toLocaleTimeString();
+        const alertTimeAgo = this.formatTimeAgo(alertTime);
         const startsIn = this.formatTimeUntilStart(change.commence_time);
         
-        // Format price change
+        // Format price change with red new price
         const oldPrice = this.formatOdds(change.old_odds);
         const newPrice = this.formatOdds(change.new_odds);
-        const priceChange = `${oldPrice} → ${newPrice}`;
+        const priceChange = `${oldPrice} → <span class="new-price">${newPrice}</span>`;
         
-        // Calculate no-vig price (we'll need both sides for this, but for now use the new odds)
-        // Note: This is a simplified calculation - ideally we'd have both sides of the market
-        const noVigPrice = this.calculateNoVigPrice(change.new_odds, -change.new_odds);
-        const noVigPriceFormatted = this.formatOdds(noVigPrice);
+        // Format outcome with point values for over/under and spreads
+        let outcomeText = change.team_name;
+        if (change.market_key === 'totals' && change.point_value) {
+            const overUnder = change.team_name.toLowerCase().includes('over') ? 'Over' : 'Under';
+            outcomeText = `${overUnder} ${change.point_value}`;
+        } else if (change.market_key === 'spreads' && change.point_value) {
+            const spreadSign = change.point_value > 0 ? '+' : '';
+            outcomeText = `${change.team_name} ${spreadSign}${change.point_value}`;
+        }
+        
+        // Calculate proper no-vig price using both sides
+        let noVigPriceFormatted = '--';
+        if (change.other_side_odds) {
+            const noVigPrice = this.calculateNoVigPrice(change.new_odds, change.other_side_odds);
+            noVigPriceFormatted = this.formatOdds(noVigPrice);
+        }
         
         // Format drop value
         const dropValue = change.change_percentage.toFixed(1) + '%';
@@ -670,12 +688,17 @@ class PinnacleOddsApp {
                 </div>
             </td>
             <td class="starts-cell">${startsIn}</td>
-            <td class="alert-cell">${alertTimeString}</td>
-            <td class="outcome-cell">${change.team_name}</td>
+            <td class="alert-cell">${alertTimeAgo}</td>
+            <td class="outcome-cell">${outcomeText}</td>
             <td class="price-cell">${priceChange}</td>
             <td class="no-vig-cell">${noVigPriceFormatted}</td>
             <td class="drop-value-cell ${dropClass}">${dropValue}</td>
         `;
+        
+        // Add click handler for price history
+        row.addEventListener('click', () => {
+            this.showPriceHistory(change);
+        });
         
         return row;
     }
@@ -853,13 +876,35 @@ class PinnacleOddsApp {
             return 'Live';
         }
         
-        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
         
-        if (diffHours > 0) {
+        if (diffDays > 0) {
+            return `${diffDays}d ${diffHours}h`;
+        } else if (diffHours > 0) {
             return `${diffHours}h ${diffMinutes}m`;
         } else {
             return `${diffMinutes}m`;
+        }
+    }
+
+    formatTimeAgo(date) {
+        const now = new Date();
+        const diffMs = now - date;
+        
+        const diffMinutes = Math.floor(diffMs / (1000 * 60));
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        
+        if (diffMinutes < 1) {
+            return 'Just now';
+        } else if (diffMinutes < 60) {
+            return `${diffMinutes}m ago`;
+        } else if (diffHours < 24) {
+            return `${diffHours}h ago`;
+        } else {
+            return `${diffDays}d ago`;
         }
     }
 
@@ -1095,6 +1140,10 @@ class PinnacleOddsApp {
         }
     }
 
+    hideLoading() {
+        this.showLoading(false);
+    }
+
     filterHistory(searchTerm) {
         const items = document.querySelectorAll('.history-item');
         items.forEach(item => {
@@ -1142,6 +1191,137 @@ class PinnacleOddsApp {
         
         // Reload odds with new format
         this.loadOdds();
+    }
+
+    async showPriceHistory(change) {
+        try {
+            // Fetch price history
+            const response = await fetch(`/api/price-history/${change.event_id}?market_id=${change.market_id}&team_name=${encodeURIComponent(change.team_name)}&hours=24`);
+            const data = await response.json();
+            
+            if (data.history && data.history.length > 0) {
+                // Update pane title
+                document.getElementById('pane-title').textContent = 
+                    `${change.home_team} vs ${change.away_team} - ${change.team_name}`;
+                
+                // Create chart
+                this.createPriceChart(data.history);
+                
+                // Populate table
+                this.populatePriceHistoryTable(data.history);
+                
+                // Show pane
+                document.getElementById('price-history-pane').classList.add('open');
+                document.querySelector('.main-content').classList.add('pane-open');
+            } else {
+                this.showToast('No price history available for this selection', 'warning');
+            }
+        } catch (error) {
+            console.error('Error fetching price history:', error);
+            this.showToast('Failed to load price history', 'error');
+        }
+    }
+
+    createPriceChart(history) {
+        const ctx = document.getElementById('price-chart').getContext('2d');
+        
+        // Destroy existing chart if it exists
+        if (this.priceChart) {
+            this.priceChart.destroy();
+        }
+        
+        const labels = history.map(item => {
+            const date = new Date(item.scraped_at);
+            return date.toLocaleTimeString() + ' ' + date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });
+        });
+        
+        const prices = history.map(item => item.odds_value);
+        const limits = history.map(item => item.bet_limit || 100); // Use actual bet limits or default to 100
+        
+        this.priceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Price',
+                        data: prices,
+                        borderColor: '#00ff88',
+                        backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Limit',
+                        data: limits,
+                        borderColor: '#ffaa00',
+                        backgroundColor: 'rgba(255, 170, 0, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        borderDash: [5, 5]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#ffffff',
+                            maxTicksLimit: 5
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#ffffff'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    populatePriceHistoryTable(history) {
+        const tbody = document.getElementById('price-history-tbody');
+        tbody.innerHTML = '';
+        
+        history.forEach(item => {
+            const row = document.createElement('tr');
+            const date = new Date(item.scraped_at);
+            const timeString = date.toLocaleTimeString() + ' ' + date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });
+            
+            row.innerHTML = `
+                <td>${timeString}</td>
+                <td>${this.formatOdds(item.odds_value)}</td>
+                <td>${item.bet_limit || 'N/A'}</td>
+            `;
+            
+            tbody.appendChild(row);
+        });
+    }
+
+    closePriceHistoryPane() {
+        document.getElementById('price-history-pane').classList.remove('open');
+        document.querySelector('.main-content').classList.remove('pane-open');
+        if (this.priceChart) {
+            this.priceChart.destroy();
+            this.priceChart = null;
+        }
     }
 }
 
