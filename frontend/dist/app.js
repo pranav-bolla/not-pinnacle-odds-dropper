@@ -684,7 +684,7 @@ class PinnacleOddsApp {
                     <div class="match-teams">${change.home_team} vs ${change.away_team}</div>
                     <div class="match-meta">
                         <span class="sport-badge">${change.sport_title}</span>
-                        <span class="market-badge">${change.market_key === 'h2h' ? 'Moneyline (3-way)' : change.market_name}</span>
+                        <span class="market-badge">${change.market_key === 'h2h' ? (change.sport_title.includes('Soccer') || change.sport_title.includes('Premier League') || change.sport_title.includes('La Liga') || change.sport_title.includes('Bundesliga') || change.sport_title.includes('Serie A') || change.sport_title.includes('Ligue') || change.sport_title.includes('Championship') ? 'Moneyline (3-way)' : 'Moneyline') : change.market_name}</span>
                     </div>
                 </div>
             </td>
@@ -1293,7 +1293,8 @@ class PinnacleOddsApp {
                                 fill: false,
                                 tension: 0.1,
                                 pointRadius: 0,
-                                pointHoverRadius: 0
+                                pointHoverRadius: 0,
+                                yAxisID: 'y'
                             },
                             {
                                 label: 'Limit',
@@ -1304,7 +1305,8 @@ class PinnacleOddsApp {
                                 fill: false,
                                 borderDash: [5, 5],
                                 pointRadius: 0,
-                                pointHoverRadius: 0
+                                pointHoverRadius: 0,
+                                yAxisID: 'y1'
                             }
                         ]
             },
@@ -1330,11 +1332,35 @@ class PinnacleOddsApp {
                         }
                     },
                     y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
                         ticks: {
-                            color: '#ffffff'
+                            color: '#00ff88'
                         },
                         grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
+                            color: 'rgba(0, 255, 136, 0.1)'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Price (Odds)',
+                            color: '#00ff88'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        ticks: {
+                            color: '#ffaa00'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Limit ($)',
+                            color: '#ffaa00'
                         }
                     }
                 }
