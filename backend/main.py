@@ -100,6 +100,15 @@ async def read_root():
     except FileNotFoundError:
         return {"message": "Frontend not built. Run 'npm run build' in the frontend directory."}
 
+@app.get("/favicon.svg")
+async def favicon():
+    """Serve the favicon"""
+    try:
+        with open("frontend/dist/favicon.svg", "r") as f:
+            return HTMLResponse(content=f.read(), media_type="image/svg+xml")
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Favicon not found")
+
 # API Endpoints
 
 @app.get("/api/health")

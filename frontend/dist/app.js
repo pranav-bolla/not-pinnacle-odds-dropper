@@ -53,18 +53,6 @@ class PinnacleOddsApp {
             });
         });
 
-        // Refresh buttons
-        document.getElementById('refresh-odds').addEventListener('click', () => {
-            this.loadOdds();
-        });
-
-        document.getElementById('refresh-drops').addEventListener('click', () => {
-            this.loadDrops();
-        });
-
-        document.getElementById('refresh-history').addEventListener('click', () => {
-            this.loadHistory();
-        });
 
         // Filters
         document.getElementById('sport-filter').addEventListener('change', () => {
@@ -1295,42 +1283,47 @@ class PinnacleOddsApp {
             type: 'line',
             data: {
                 labels: labels,
-                datasets: [
-                    {
-                        label: 'Price',
-                        data: prices,
-                        borderColor: '#00ff88',
-                        backgroundColor: 'rgba(0, 255, 136, 0.1)',
-                        borderWidth: 2,
-                        fill: false,
-                        tension: 0.1
-                    },
-                    {
-                        label: 'Limit',
-                        data: limits,
-                        borderColor: '#ffaa00',
-                        backgroundColor: 'rgba(255, 170, 0, 0.1)',
-                        borderWidth: 2,
-                        fill: false,
-                        borderDash: [5, 5]
-                    }
-                ]
+                        datasets: [
+                            {
+                                label: 'Price',
+                                data: prices,
+                                borderColor: '#00ff88',
+                                backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                                borderWidth: 2,
+                                fill: false,
+                                tension: 0.1,
+                                pointRadius: 0,
+                                pointHoverRadius: 0
+                            },
+                            {
+                                label: 'Limit',
+                                data: limits,
+                                borderColor: '#ffaa00',
+                                backgroundColor: 'rgba(255, 170, 0, 0.1)',
+                                borderWidth: 2,
+                                fill: false,
+                                borderDash: [5, 5],
+                                pointRadius: 0,
+                                pointHoverRadius: 0
+                            }
+                        ]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    }
-                },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#ffffff'
+                                }
+                            }
+                        },
                 scales: {
                     x: {
                         ticks: {
                             color: '#ffffff',
-                            maxTicksLimit: 5
+                            maxTicksLimit: 3
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
@@ -1353,7 +1346,12 @@ class PinnacleOddsApp {
         const tbody = document.getElementById('price-history-tbody');
         tbody.innerHTML = '';
         
-        history.forEach(item => {
+        // Sort history by scraped_at in descending order (newest first)
+        const sortedHistory = [...history].sort((a, b) => 
+            new Date(b.scraped_at) - new Date(a.scraped_at)
+        );
+        
+        sortedHistory.forEach(item => {
             const row = document.createElement('tr');
             const date = new Date(item.scraped_at);
             const timeString = date.toLocaleTimeString() + ' ' + date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });

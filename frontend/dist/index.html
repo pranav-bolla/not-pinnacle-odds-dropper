@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Not Pinnacle Odds Tracker - Not POD</title>
+    <title>Not POD</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,10 +81,6 @@
                         <select id="market-filter" class="filter-select">
                             <option value="">All Markets</option>
                         </select>
-                        <button class="refresh-btn" id="refresh-odds">
-                            <i class="fas fa-sync-alt"></i>
-                            Refresh
-                        </button>
                     </div>
                     <div class="view-controls">
                         <button class="view-toggle active" data-view="grid">
@@ -111,10 +108,6 @@
                             <option value="24" selected>Last 24 Hours</option>
                             <option value="168">Last Week</option>
                         </select>
-                        <button class="refresh-btn" id="refresh-drops">
-                            <i class="fas fa-sync-alt"></i>
-                            Refresh
-                        </button>
                     </div>
                 </div>
 
@@ -129,10 +122,6 @@
                     <h2>Odds History</h2>
                     <div class="history-controls">
                         <input type="text" id="history-event-search" placeholder="Search events..." class="search-input">
-                        <button class="refresh-btn" id="refresh-history">
-                            <i class="fas fa-sync-alt"></i>
-                            Refresh
-                        </button>
                     </div>
                 </div>
 
