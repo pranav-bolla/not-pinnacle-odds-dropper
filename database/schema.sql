@@ -65,6 +65,8 @@ CREATE TABLE odds_changes (
     change_percentage DECIMAL(8,4) NOT NULL,
     point_value DECIMAL(10,2),
     change_type VARCHAR(20) NOT NULL, -- 'increase', 'decrease', 'significant_drop'
+    old_implied_prob DECIMAL(8,6),
+    new_implied_prob DECIMAL(8,6),
     detected_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     is_flagged BOOLEAN DEFAULT false,
     flag_reason TEXT

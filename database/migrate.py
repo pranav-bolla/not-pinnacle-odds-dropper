@@ -30,7 +30,7 @@ async def run_migration():
             SELECT table_name 
             FROM information_schema.tables 
             WHERE table_schema = 'public' 
-            AND table_name IN ('sports', 'events', 'markets', 'odds', 'odds_changes', 'price_history', 'bets')
+            AND table_name IN ('sports', 'events', 'markets', 'odds', 'odds_changes', 'alerts', 'user_preferences', 'price_history', 'bets')
         """)
         
         existing_tables = [row['table_name'] for row in result]
@@ -48,6 +48,17 @@ async def run_migration():
                     logger.info("Adding missing bet_limit column to price_history table")
                     await conn.execute("ALTER TABLE price_history ADD COLUMN bet_limit DECIMAL(10,2)")
                     logger.info("Successfully added bet_limit column to price_history")
+            
+            # Check if odds_changes table is missing implied probability columns
+            if 'odds_changes' in existing_tables:
+                try:
+                    await conn.execute("SELECT old_implied_prob FROM odds_changes LIMIT 1")
+                    logger.info("implied probability columns already exist in odds_changes")
+                except Exception:
+                    logger.info("Adding missing implied probability columns to odds_changes table")
+                    await conn.execute("ALTER TABLE odds_changes ADD COLUMN old_implied_prob DECIMAL(8,6)")
+                    await conn.execute("ALTER TABLE odds_changes ADD COLUMN new_implied_prob DECIMAL(8,6)")
+                    logger.info("Successfully added implied probability columns to odds_changes")
             
             logger.info("Database migration completed successfully")
         else:
