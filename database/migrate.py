@@ -37,7 +37,19 @@ async def run_migration():
         
         if existing_tables:
             logger.info(f"Tables already exist: {', '.join(existing_tables)}")
-            logger.info("Skipping migration - database is already set up")
+            logger.info("Checking for missing columns...")
+            
+            # Check if price_history table is missing bet_limit column
+            if 'price_history' in existing_tables:
+                try:
+                    await conn.execute("SELECT bet_limit FROM price_history LIMIT 1")
+                    logger.info("bet_limit column already exists in price_history")
+                except Exception:
+                    logger.info("Adding missing bet_limit column to price_history table")
+                    await conn.execute("ALTER TABLE price_history ADD COLUMN bet_limit DECIMAL(10,2)")
+                    logger.info("Successfully added bet_limit column to price_history")
+            
+            logger.info("Database migration completed successfully")
         else:
             # Execute schema only if tables don't exist
             await conn.execute(schema_sql)

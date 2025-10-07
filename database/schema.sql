@@ -101,6 +101,7 @@ CREATE TABLE price_history (
     team_name VARCHAR(255) NOT NULL,
     odds_value DECIMAL(10,3) NOT NULL,
     point_value DECIMAL(10,2),
+    bet_limit DECIMAL(10,2),
     scraped_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
