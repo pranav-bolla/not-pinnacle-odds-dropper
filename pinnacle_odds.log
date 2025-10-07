@@ -15154,3 +15154,756 @@ DETAIL:  Key (event_id)=(54438ae3-332a-aff1-c67b-fec0e7607daa) is not present in
 2025-10-06 22:34:46,948 - pinnacle_scraper - INFO - Scraping session completed
 2025-10-06 22:34:46,960 - database.connection - INFO - Database connection pool closed
 2025-10-06 22:34:46,962 - __main__ - INFO - ✅ Scheduled scraping completed successfully
+2025-10-06 22:39:47,324 - __main__ - INFO - 🔄 Starting scheduled odds scraping...
+2025-10-06 22:39:47,502 - database.connection - INFO - Database connection pool initialized
+2025-10-06 22:39:47,503 - pinnacle_scraper - INFO - Database initialized successfully
+2025-10-06 22:39:47,515 - pinnacle_scraper - INFO - Starting Pinnacle odds scraping session
+2025-10-06 22:39:47,515 - pinnacle_scraper - INFO - Starting to scrape Pinnacle odds for all sports
+2025-10-06 22:39:47,515 - pinnacle_scraper - INFO - Processing sport: soccer_epl
+2025-10-06 22:39:47,515 - pinnacle_scraper - INFO - Fetching featured odds for soccer_epl
+2025-10-06 22:39:47,610 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_epl
+2025-10-06 22:39:47,813 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:39:48,328 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:39:48,329 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_epl
+2025-10-06 22:39:48,430 - pinnacle_scraper - INFO - Processing sport: soccer_efl_champ
+2025-10-06 22:39:48,430 - pinnacle_scraper - INFO - Fetching featured odds for soccer_efl_champ
+2025-10-06 22:39:48,469 - pinnacle_scraper - INFO - Retrieved 12 events for soccer_efl_champ
+2025-10-06 22:39:48,593 - pinnacle_scraper - INFO - Inserted 84 odds records into database
+2025-10-06 22:39:48,898 - pinnacle_scraper - INFO - Inserted 84 price history records
+2025-10-06 22:39:48,898 - pinnacle_scraper - INFO - Processed 84 odds entries for soccer_efl_champ
+2025-10-06 22:39:48,999 - pinnacle_scraper - INFO - Processing sport: soccer_spain_la_liga
+2025-10-06 22:39:48,999 - pinnacle_scraper - INFO - Fetching featured odds for soccer_spain_la_liga
+2025-10-06 22:39:49,060 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_spain_la_liga
+2025-10-06 22:39:49,266 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:39:49,784 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:39:49,785 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_spain_la_liga
+2025-10-06 22:39:49,886 - pinnacle_scraper - INFO - Processing sport: soccer_germany_bundesliga
+2025-10-06 22:39:49,886 - pinnacle_scraper - INFO - Fetching featured odds for soccer_germany_bundesliga
+2025-10-06 22:39:49,933 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_germany_bundesliga
+2025-10-06 22:39:50,123 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:39:50,597 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:39:50,597 - pinnacle_scraper - INFO - Processed 126 odds entries for soccer_germany_bundesliga
+2025-10-06 22:39:50,697 - pinnacle_scraper - INFO - Processing sport: soccer_italy_serie_a
+2025-10-06 22:39:50,698 - pinnacle_scraper - INFO - Fetching featured odds for soccer_italy_serie_a
+2025-10-06 22:39:50,769 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_italy_serie_a
+2025-10-06 22:39:50,986 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:39:51,500 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:39:51,501 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_italy_serie_a
+2025-10-06 22:39:51,601 - pinnacle_scraper - INFO - Processing sport: soccer_france_ligue_one
+2025-10-06 22:39:51,602 - pinnacle_scraper - INFO - Fetching featured odds for soccer_france_ligue_one
+2025-10-06 22:39:51,645 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_france_ligue_one
+2025-10-06 22:39:51,811 - pinnacle_scraper - INFO - Inserted 112 odds records into database
+2025-10-06 22:39:52,238 - pinnacle_scraper - INFO - Inserted 112 price history records
+2025-10-06 22:39:52,239 - pinnacle_scraper - INFO - Processed 112 odds entries for soccer_france_ligue_one
+2025-10-06 22:39:52,339 - pinnacle_scraper - INFO - Processing sport: americanfootball_nfl
+2025-10-06 22:39:52,339 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_nfl
+2025-10-06 22:39:52,406 - pinnacle_scraper - INFO - Retrieved 13 events for americanfootball_nfl
+2025-10-06 22:39:52,526 - pinnacle_scraper - INFO - Inserted 72 odds records into database
+2025-10-06 22:39:52,792 - pinnacle_scraper - INFO - Inserted 72 price history records
+2025-10-06 22:39:52,793 - pinnacle_scraper - INFO - Processed 72 odds entries for americanfootball_nfl
+2025-10-06 22:39:52,893 - pinnacle_scraper - INFO - Processing sport: basketball_nba
+2025-10-06 22:39:52,894 - pinnacle_scraper - INFO - Fetching featured odds for basketball_nba
+2025-10-06 22:39:52,948 - pinnacle_scraper - INFO - Retrieved 44 events for basketball_nba
+2025-10-06 22:39:53,192 - pinnacle_scraper - INFO - Inserted 12 odds records into database
+2025-10-06 22:39:53,240 - pinnacle_scraper - INFO - Inserted 12 price history records
+2025-10-06 22:39:53,240 - pinnacle_scraper - INFO - Processed 12 odds entries for basketball_nba
+2025-10-06 22:39:53,340 - pinnacle_scraper - INFO - Processing sport: icehockey_nhl
+2025-10-06 22:39:53,341 - pinnacle_scraper - INFO - Fetching featured odds for icehockey_nhl
+2025-10-06 22:39:53,391 - pinnacle_scraper - INFO - Retrieved 21 events for icehockey_nhl
+2025-10-06 22:39:53,623 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:39:54,156 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:39:54,156 - pinnacle_scraper - INFO - Processed 126 odds entries for icehockey_nhl
+2025-10-06 22:39:54,257 - pinnacle_scraper - INFO - Processing sport: baseball_mlb
+2025-10-06 22:39:54,257 - pinnacle_scraper - INFO - Fetching featured odds for baseball_mlb
+2025-10-06 22:39:54,296 - pinnacle_scraper - INFO - Retrieved 4 events for baseball_mlb
+2025-10-06 22:39:54,351 - pinnacle_scraper - INFO - Inserted 18 odds records into database
+2025-10-06 22:39:54,421 - pinnacle_scraper - INFO - Inserted 18 price history records
+2025-10-06 22:39:54,421 - pinnacle_scraper - INFO - Processed 18 odds entries for baseball_mlb
+2025-10-06 22:39:54,522 - pinnacle_scraper - INFO - Processing sport: americanfootball_ncaaf
+2025-10-06 22:39:54,522 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_ncaaf
+2025-10-06 22:39:54,588 - pinnacle_scraper - INFO - Retrieved 56 events for americanfootball_ncaaf
+2025-10-06 22:39:55,140 - pinnacle_scraper - INFO - Inserted 334 odds records into database
+2025-10-06 22:39:56,411 - pinnacle_scraper - INFO - Inserted 334 price history records
+2025-10-06 22:39:56,412 - pinnacle_scraper - INFO - Processed 334 odds entries for americanfootball_ncaaf
+2025-10-06 22:39:56,514 - pinnacle_scraper - INFO - Processing sport: basketball_ncaab
+2025-10-06 22:39:56,514 - pinnacle_scraper - INFO - Fetching featured odds for basketball_ncaab
+2025-10-06 22:39:56,562 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:39:56,563 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:39:56,664 - pinnacle_scraper - INFO - Total odds entries scraped: 1304
+2025-10-06 22:39:57,543 - pinnacle_scraper - INFO - Retrieved 1000 previous odds from database
+2025-10-06 22:39:57,546 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: MLB - New York Yankees vs Toronto Blue Jays | h2h - Toronto Blue Jays | 129.0 → 127 | Drop: 0.88%
+2025-10-06 22:39:57,546 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: MLB - Los Angeles Dodgers vs Philadelphia Phillies | totals - Over | -104.0 → -106 | Drop: 0.93%
+2025-10-06 22:39:57,548 - pinnacle_scraper - INFO - Detected 0 significant odds drops (better prices)
+2025-10-06 22:39:57,549 - pinnacle_scraper - INFO - No significant odds changes detected
+2025-10-06 22:39:57,549 - pinnacle_scraper - INFO - Scraping session completed
+2025-10-06 22:39:57,561 - database.connection - INFO - Database connection pool closed
+2025-10-06 22:39:57,563 - __main__ - INFO - ✅ Scheduled scraping completed successfully
+2025-10-06 22:44:57,941 - __main__ - INFO - 🔄 Starting scheduled odds scraping...
+2025-10-06 22:44:58,100 - database.connection - INFO - Database connection pool initialized
+2025-10-06 22:44:58,100 - pinnacle_scraper - INFO - Database initialized successfully
+2025-10-06 22:44:58,104 - pinnacle_scraper - INFO - Starting Pinnacle odds scraping session
+2025-10-06 22:44:58,104 - pinnacle_scraper - INFO - Starting to scrape Pinnacle odds for all sports
+2025-10-06 22:44:58,104 - pinnacle_scraper - INFO - Processing sport: soccer_epl
+2025-10-06 22:44:58,105 - pinnacle_scraper - INFO - Fetching featured odds for soccer_epl
+2025-10-06 22:44:58,195 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_epl
+2025-10-06 22:44:58,387 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:44:58,803 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:44:58,803 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_epl
+2025-10-06 22:44:58,904 - pinnacle_scraper - INFO - Processing sport: soccer_efl_champ
+2025-10-06 22:44:58,904 - pinnacle_scraper - INFO - Fetching featured odds for soccer_efl_champ
+2025-10-06 22:44:58,957 - pinnacle_scraper - INFO - Retrieved 12 events for soccer_efl_champ
+2025-10-06 22:44:59,064 - pinnacle_scraper - INFO - Inserted 84 odds records into database
+2025-10-06 22:44:59,302 - pinnacle_scraper - INFO - Inserted 84 price history records
+2025-10-06 22:44:59,302 - pinnacle_scraper - INFO - Processed 84 odds entries for soccer_efl_champ
+2025-10-06 22:44:59,403 - pinnacle_scraper - INFO - Processing sport: soccer_spain_la_liga
+2025-10-06 22:44:59,404 - pinnacle_scraper - INFO - Fetching featured odds for soccer_spain_la_liga
+2025-10-06 22:44:59,462 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_spain_la_liga
+2025-10-06 22:44:59,624 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:45:00,029 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:45:00,029 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_spain_la_liga
+2025-10-06 22:45:00,130 - pinnacle_scraper - INFO - Processing sport: soccer_germany_bundesliga
+2025-10-06 22:45:00,130 - pinnacle_scraper - INFO - Fetching featured odds for soccer_germany_bundesliga
+2025-10-06 22:45:00,197 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_germany_bundesliga
+2025-10-06 22:45:00,335 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:45:00,712 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:45:00,713 - pinnacle_scraper - INFO - Processed 126 odds entries for soccer_germany_bundesliga
+2025-10-06 22:45:00,813 - pinnacle_scraper - INFO - Processing sport: soccer_italy_serie_a
+2025-10-06 22:45:00,813 - pinnacle_scraper - INFO - Fetching featured odds for soccer_italy_serie_a
+2025-10-06 22:45:00,857 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_italy_serie_a
+2025-10-06 22:45:01,009 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:45:01,419 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:45:01,419 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_italy_serie_a
+2025-10-06 22:45:01,519 - pinnacle_scraper - INFO - Processing sport: soccer_france_ligue_one
+2025-10-06 22:45:01,520 - pinnacle_scraper - INFO - Fetching featured odds for soccer_france_ligue_one
+2025-10-06 22:45:01,571 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_france_ligue_one
+2025-10-06 22:45:01,705 - pinnacle_scraper - INFO - Inserted 112 odds records into database
+2025-10-06 22:45:02,036 - pinnacle_scraper - INFO - Inserted 112 price history records
+2025-10-06 22:45:02,036 - pinnacle_scraper - INFO - Processed 112 odds entries for soccer_france_ligue_one
+2025-10-06 22:45:02,137 - pinnacle_scraper - INFO - Processing sport: americanfootball_nfl
+2025-10-06 22:45:02,137 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_nfl
+2025-10-06 22:45:02,209 - pinnacle_scraper - INFO - Retrieved 13 events for americanfootball_nfl
+2025-10-06 22:45:02,317 - pinnacle_scraper - INFO - Inserted 72 odds records into database
+2025-10-06 22:45:02,537 - pinnacle_scraper - INFO - Inserted 72 price history records
+2025-10-06 22:45:02,537 - pinnacle_scraper - INFO - Processed 72 odds entries for americanfootball_nfl
+2025-10-06 22:45:02,638 - pinnacle_scraper - INFO - Processing sport: basketball_nba
+2025-10-06 22:45:02,638 - pinnacle_scraper - INFO - Fetching featured odds for basketball_nba
+2025-10-06 22:45:02,685 - pinnacle_scraper - INFO - Retrieved 44 events for basketball_nba
+2025-10-06 22:45:02,853 - pinnacle_scraper - INFO - Inserted 12 odds records into database
+2025-10-06 22:45:02,892 - pinnacle_scraper - INFO - Inserted 12 price history records
+2025-10-06 22:45:02,892 - pinnacle_scraper - INFO - Processed 12 odds entries for basketball_nba
+2025-10-06 22:45:02,992 - pinnacle_scraper - INFO - Processing sport: icehockey_nhl
+2025-10-06 22:45:02,993 - pinnacle_scraper - INFO - Fetching featured odds for icehockey_nhl
+2025-10-06 22:45:03,039 - pinnacle_scraper - INFO - Retrieved 21 events for icehockey_nhl
+2025-10-06 22:45:03,213 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:45:03,580 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:45:03,580 - pinnacle_scraper - INFO - Processed 126 odds entries for icehockey_nhl
+2025-10-06 22:45:03,681 - pinnacle_scraper - INFO - Processing sport: baseball_mlb
+2025-10-06 22:45:03,681 - pinnacle_scraper - INFO - Fetching featured odds for baseball_mlb
+2025-10-06 22:45:03,717 - pinnacle_scraper - INFO - Retrieved 4 events for baseball_mlb
+2025-10-06 22:45:03,755 - pinnacle_scraper - INFO - Inserted 18 odds records into database
+2025-10-06 22:45:03,812 - pinnacle_scraper - INFO - Inserted 18 price history records
+2025-10-06 22:45:03,812 - pinnacle_scraper - INFO - Processed 18 odds entries for baseball_mlb
+2025-10-06 22:45:03,913 - pinnacle_scraper - INFO - Processing sport: americanfootball_ncaaf
+2025-10-06 22:45:03,913 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_ncaaf
+2025-10-06 22:45:03,959 - pinnacle_scraper - INFO - Retrieved 56 events for americanfootball_ncaaf
+2025-10-06 22:45:04,361 - pinnacle_scraper - INFO - Inserted 334 odds records into database
+2025-10-06 22:45:05,347 - pinnacle_scraper - INFO - Inserted 334 price history records
+2025-10-06 22:45:05,348 - pinnacle_scraper - INFO - Processed 334 odds entries for americanfootball_ncaaf
+2025-10-06 22:45:05,449 - pinnacle_scraper - INFO - Processing sport: basketball_ncaab
+2025-10-06 22:45:05,449 - pinnacle_scraper - INFO - Fetching featured odds for basketball_ncaab
+2025-10-06 22:45:05,493 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:45:05,494 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:45:05,595 - pinnacle_scraper - INFO - Total odds entries scraped: 1304
+2025-10-06 22:45:06,216 - pinnacle_scraper - INFO - Retrieved 1000 previous odds from database
+2025-10-06 22:45:06,217 - pinnacle_scraper - INFO - Detected 0 significant odds drops (better prices)
+2025-10-06 22:45:06,218 - pinnacle_scraper - INFO - No significant odds changes detected
+2025-10-06 22:45:06,218 - pinnacle_scraper - INFO - Scraping session completed
+2025-10-06 22:45:06,226 - database.connection - INFO - Database connection pool closed
+2025-10-06 22:45:06,227 - __main__ - INFO - ✅ Scheduled scraping completed successfully
+2025-10-06 22:50:06,595 - __main__ - INFO - 🔄 Starting scheduled odds scraping...
+2025-10-06 22:50:06,745 - database.connection - INFO - Database connection pool initialized
+2025-10-06 22:50:06,745 - pinnacle_scraper - INFO - Database initialized successfully
+2025-10-06 22:50:06,748 - pinnacle_scraper - INFO - Starting Pinnacle odds scraping session
+2025-10-06 22:50:06,749 - pinnacle_scraper - INFO - Starting to scrape Pinnacle odds for all sports
+2025-10-06 22:50:06,749 - pinnacle_scraper - INFO - Processing sport: soccer_epl
+2025-10-06 22:50:06,749 - pinnacle_scraper - INFO - Fetching featured odds for soccer_epl
+2025-10-06 22:50:06,848 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_epl
+2025-10-06 22:50:07,044 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:50:07,480 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:50:07,480 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_epl
+2025-10-06 22:50:07,581 - pinnacle_scraper - INFO - Processing sport: soccer_efl_champ
+2025-10-06 22:50:07,581 - pinnacle_scraper - INFO - Fetching featured odds for soccer_efl_champ
+2025-10-06 22:50:07,638 - pinnacle_scraper - INFO - Retrieved 12 events for soccer_efl_champ
+2025-10-06 22:50:07,753 - pinnacle_scraper - INFO - Inserted 84 odds records into database
+2025-10-06 22:50:08,004 - pinnacle_scraper - INFO - Inserted 84 price history records
+2025-10-06 22:50:08,005 - pinnacle_scraper - INFO - Processed 84 odds entries for soccer_efl_champ
+2025-10-06 22:50:08,105 - pinnacle_scraper - INFO - Processing sport: soccer_spain_la_liga
+2025-10-06 22:50:08,105 - pinnacle_scraper - INFO - Fetching featured odds for soccer_spain_la_liga
+2025-10-06 22:50:08,153 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_spain_la_liga
+2025-10-06 22:50:08,329 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:50:08,724 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:50:08,725 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_spain_la_liga
+2025-10-06 22:50:08,825 - pinnacle_scraper - INFO - Processing sport: soccer_germany_bundesliga
+2025-10-06 22:50:08,825 - pinnacle_scraper - INFO - Fetching featured odds for soccer_germany_bundesliga
+2025-10-06 22:50:08,877 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_germany_bundesliga
+2025-10-06 22:50:09,032 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:50:09,394 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:50:09,395 - pinnacle_scraper - INFO - Processed 126 odds entries for soccer_germany_bundesliga
+2025-10-06 22:50:09,495 - pinnacle_scraper - INFO - Processing sport: soccer_italy_serie_a
+2025-10-06 22:50:09,496 - pinnacle_scraper - INFO - Fetching featured odds for soccer_italy_serie_a
+2025-10-06 22:50:09,556 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_italy_serie_a
+2025-10-06 22:50:09,719 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:50:10,115 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:50:10,116 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_italy_serie_a
+2025-10-06 22:50:10,216 - pinnacle_scraper - INFO - Processing sport: soccer_france_ligue_one
+2025-10-06 22:50:10,217 - pinnacle_scraper - INFO - Fetching featured odds for soccer_france_ligue_one
+2025-10-06 22:50:10,313 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_france_ligue_one
+2025-10-06 22:50:10,442 - pinnacle_scraper - INFO - Inserted 112 odds records into database
+2025-10-06 22:50:10,756 - pinnacle_scraper - INFO - Inserted 112 price history records
+2025-10-06 22:50:10,756 - pinnacle_scraper - INFO - Processed 112 odds entries for soccer_france_ligue_one
+2025-10-06 22:50:10,856 - pinnacle_scraper - INFO - Processing sport: americanfootball_nfl
+2025-10-06 22:50:10,857 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_nfl
+2025-10-06 22:50:10,919 - pinnacle_scraper - INFO - Retrieved 13 events for americanfootball_nfl
+2025-10-06 22:50:11,029 - pinnacle_scraper - INFO - Inserted 72 odds records into database
+2025-10-06 22:50:11,256 - pinnacle_scraper - INFO - Inserted 72 price history records
+2025-10-06 22:50:11,257 - pinnacle_scraper - INFO - Processed 72 odds entries for americanfootball_nfl
+2025-10-06 22:50:11,357 - pinnacle_scraper - INFO - Processing sport: basketball_nba
+2025-10-06 22:50:11,358 - pinnacle_scraper - INFO - Fetching featured odds for basketball_nba
+2025-10-06 22:50:11,398 - pinnacle_scraper - INFO - Retrieved 44 events for basketball_nba
+2025-10-06 22:50:11,585 - pinnacle_scraper - INFO - Inserted 12 odds records into database
+2025-10-06 22:50:11,619 - pinnacle_scraper - INFO - Inserted 12 price history records
+2025-10-06 22:50:11,620 - pinnacle_scraper - INFO - Processed 12 odds entries for basketball_nba
+2025-10-06 22:50:11,720 - pinnacle_scraper - INFO - Processing sport: icehockey_nhl
+2025-10-06 22:50:11,720 - pinnacle_scraper - INFO - Fetching featured odds for icehockey_nhl
+2025-10-06 22:50:11,765 - pinnacle_scraper - INFO - Retrieved 21 events for icehockey_nhl
+2025-10-06 22:50:11,937 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:50:12,305 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:50:12,305 - pinnacle_scraper - INFO - Processed 126 odds entries for icehockey_nhl
+2025-10-06 22:50:12,406 - pinnacle_scraper - INFO - Processing sport: baseball_mlb
+2025-10-06 22:50:12,406 - pinnacle_scraper - INFO - Fetching featured odds for baseball_mlb
+2025-10-06 22:50:12,455 - pinnacle_scraper - INFO - Retrieved 4 events for baseball_mlb
+2025-10-06 22:50:12,488 - pinnacle_scraper - INFO - Inserted 18 odds records into database
+2025-10-06 22:50:12,547 - pinnacle_scraper - INFO - Inserted 18 price history records
+2025-10-06 22:50:12,547 - pinnacle_scraper - INFO - Processed 18 odds entries for baseball_mlb
+2025-10-06 22:50:12,648 - pinnacle_scraper - INFO - Processing sport: americanfootball_ncaaf
+2025-10-06 22:50:12,648 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_ncaaf
+2025-10-06 22:50:12,710 - pinnacle_scraper - INFO - Retrieved 56 events for americanfootball_ncaaf
+2025-10-06 22:50:13,143 - pinnacle_scraper - INFO - Inserted 334 odds records into database
+2025-10-06 22:50:14,071 - pinnacle_scraper - INFO - Inserted 334 price history records
+2025-10-06 22:50:14,072 - pinnacle_scraper - INFO - Processed 334 odds entries for americanfootball_ncaaf
+2025-10-06 22:50:14,172 - pinnacle_scraper - INFO - Processing sport: basketball_ncaab
+2025-10-06 22:50:14,173 - pinnacle_scraper - INFO - Fetching featured odds for basketball_ncaab
+2025-10-06 22:50:14,221 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:50:14,222 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:50:14,322 - pinnacle_scraper - INFO - Total odds entries scraped: 1304
+2025-10-06 22:50:14,986 - pinnacle_scraper - INFO - Retrieved 1000 previous odds from database
+2025-10-06 22:50:14,988 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: NCAAF - North Texas Mean Green vs South Florida Bulls | h2h - South Florida Bulls | -108.0 → -109 | Drop: 0.44%
+2025-10-06 22:50:14,988 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: NCAAF - Oregon Ducks vs Indiana Hoosiers | spreads - Oregon Ducks | -109.0 → -112 | Drop: 1.30%
+2025-10-06 22:50:14,988 - pinnacle_scraper - INFO - Detected 0 significant odds drops (better prices)
+2025-10-06 22:50:14,988 - pinnacle_scraper - INFO - No significant odds changes detected
+2025-10-06 22:50:14,989 - pinnacle_scraper - INFO - Scraping session completed
+2025-10-06 22:50:14,996 - database.connection - INFO - Database connection pool closed
+2025-10-06 22:50:14,997 - __main__ - INFO - ✅ Scheduled scraping completed successfully
+2025-10-06 22:55:15,365 - __main__ - INFO - 🔄 Starting scheduled odds scraping...
+2025-10-06 22:55:15,518 - database.connection - INFO - Database connection pool initialized
+2025-10-06 22:55:15,518 - pinnacle_scraper - INFO - Database initialized successfully
+2025-10-06 22:55:15,521 - pinnacle_scraper - INFO - Starting Pinnacle odds scraping session
+2025-10-06 22:55:15,521 - pinnacle_scraper - INFO - Starting to scrape Pinnacle odds for all sports
+2025-10-06 22:55:15,521 - pinnacle_scraper - INFO - Processing sport: soccer_epl
+2025-10-06 22:55:15,522 - pinnacle_scraper - INFO - Fetching featured odds for soccer_epl
+2025-10-06 22:55:15,607 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_epl
+2025-10-06 22:55:15,777 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:55:16,196 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:55:16,196 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_epl
+2025-10-06 22:55:16,297 - pinnacle_scraper - INFO - Processing sport: soccer_efl_champ
+2025-10-06 22:55:16,298 - pinnacle_scraper - INFO - Fetching featured odds for soccer_efl_champ
+2025-10-06 22:55:16,337 - pinnacle_scraper - INFO - Retrieved 12 events for soccer_efl_champ
+2025-10-06 22:55:16,431 - pinnacle_scraper - INFO - Inserted 84 odds records into database
+2025-10-06 22:55:16,664 - pinnacle_scraper - INFO - Inserted 84 price history records
+2025-10-06 22:55:16,664 - pinnacle_scraper - INFO - Processed 84 odds entries for soccer_efl_champ
+2025-10-06 22:55:16,765 - pinnacle_scraper - INFO - Processing sport: soccer_spain_la_liga
+2025-10-06 22:55:16,765 - pinnacle_scraper - INFO - Fetching featured odds for soccer_spain_la_liga
+2025-10-06 22:55:16,808 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_spain_la_liga
+2025-10-06 22:55:16,973 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:55:17,331 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:55:17,331 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_spain_la_liga
+2025-10-06 22:55:17,432 - pinnacle_scraper - INFO - Processing sport: soccer_germany_bundesliga
+2025-10-06 22:55:17,433 - pinnacle_scraper - INFO - Fetching featured odds for soccer_germany_bundesliga
+2025-10-06 22:55:17,481 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_germany_bundesliga
+2025-10-06 22:55:17,618 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:55:17,962 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:55:17,962 - pinnacle_scraper - INFO - Processed 126 odds entries for soccer_germany_bundesliga
+2025-10-06 22:55:18,063 - pinnacle_scraper - INFO - Processing sport: soccer_italy_serie_a
+2025-10-06 22:55:18,063 - pinnacle_scraper - INFO - Fetching featured odds for soccer_italy_serie_a
+2025-10-06 22:55:18,146 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_italy_serie_a
+2025-10-06 22:55:18,317 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:55:18,676 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:55:18,676 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_italy_serie_a
+2025-10-06 22:55:18,777 - pinnacle_scraper - INFO - Processing sport: soccer_france_ligue_one
+2025-10-06 22:55:18,778 - pinnacle_scraper - INFO - Fetching featured odds for soccer_france_ligue_one
+2025-10-06 22:55:18,926 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_france_ligue_one
+2025-10-06 22:55:19,061 - pinnacle_scraper - INFO - Inserted 112 odds records into database
+2025-10-06 22:55:19,336 - pinnacle_scraper - INFO - Inserted 112 price history records
+2025-10-06 22:55:19,336 - pinnacle_scraper - INFO - Processed 112 odds entries for soccer_france_ligue_one
+2025-10-06 22:55:19,437 - pinnacle_scraper - INFO - Processing sport: americanfootball_nfl
+2025-10-06 22:55:19,437 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_nfl
+2025-10-06 22:55:19,539 - pinnacle_scraper - INFO - Retrieved 13 events for americanfootball_nfl
+2025-10-06 22:55:19,638 - pinnacle_scraper - INFO - Inserted 72 odds records into database
+2025-10-06 22:55:19,826 - pinnacle_scraper - INFO - Inserted 72 price history records
+2025-10-06 22:55:19,827 - pinnacle_scraper - INFO - Processed 72 odds entries for americanfootball_nfl
+2025-10-06 22:55:19,927 - pinnacle_scraper - INFO - Processing sport: basketball_nba
+2025-10-06 22:55:19,928 - pinnacle_scraper - INFO - Fetching featured odds for basketball_nba
+2025-10-06 22:55:19,976 - pinnacle_scraper - INFO - Retrieved 44 events for basketball_nba
+2025-10-06 22:55:20,150 - pinnacle_scraper - INFO - Inserted 12 odds records into database
+2025-10-06 22:55:20,183 - pinnacle_scraper - INFO - Inserted 12 price history records
+2025-10-06 22:55:20,183 - pinnacle_scraper - INFO - Processed 12 odds entries for basketball_nba
+2025-10-06 22:55:20,284 - pinnacle_scraper - INFO - Processing sport: icehockey_nhl
+2025-10-06 22:55:20,285 - pinnacle_scraper - INFO - Fetching featured odds for icehockey_nhl
+2025-10-06 22:55:20,365 - pinnacle_scraper - INFO - Retrieved 21 events for icehockey_nhl
+2025-10-06 22:55:20,523 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:55:20,860 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:55:20,860 - pinnacle_scraper - INFO - Processed 126 odds entries for icehockey_nhl
+2025-10-06 22:55:20,961 - pinnacle_scraper - INFO - Processing sport: baseball_mlb
+2025-10-06 22:55:20,961 - pinnacle_scraper - INFO - Fetching featured odds for baseball_mlb
+2025-10-06 22:55:21,135 - pinnacle_scraper - INFO - Retrieved 3 events for baseball_mlb
+2025-10-06 22:55:21,162 - pinnacle_scraper - INFO - Inserted 18 odds records into database
+2025-10-06 22:55:21,214 - pinnacle_scraper - INFO - Inserted 18 price history records
+2025-10-06 22:55:21,214 - pinnacle_scraper - INFO - Processed 18 odds entries for baseball_mlb
+2025-10-06 22:55:21,314 - pinnacle_scraper - INFO - Processing sport: americanfootball_ncaaf
+2025-10-06 22:55:21,315 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_ncaaf
+2025-10-06 22:55:21,378 - pinnacle_scraper - INFO - Retrieved 56 events for americanfootball_ncaaf
+2025-10-06 22:55:21,765 - pinnacle_scraper - INFO - Inserted 334 odds records into database
+2025-10-06 22:55:22,658 - pinnacle_scraper - INFO - Inserted 334 price history records
+2025-10-06 22:55:22,658 - pinnacle_scraper - INFO - Processed 334 odds entries for americanfootball_ncaaf
+2025-10-06 22:55:22,759 - pinnacle_scraper - INFO - Processing sport: basketball_ncaab
+2025-10-06 22:55:22,759 - pinnacle_scraper - INFO - Fetching featured odds for basketball_ncaab
+2025-10-06 22:55:22,815 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:55:22,815 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:55:22,916 - pinnacle_scraper - INFO - Total odds entries scraped: 1304
+2025-10-06 22:55:23,278 - pinnacle_scraper - INFO - Retrieved 1000 previous odds from database
+2025-10-06 22:55:23,279 - pinnacle_scraper - INFO - Detected 0 significant odds drops (better prices)
+2025-10-06 22:55:23,279 - pinnacle_scraper - INFO - No significant odds changes detected
+2025-10-06 22:55:23,280 - pinnacle_scraper - INFO - Scraping session completed
+2025-10-06 22:55:23,286 - database.connection - INFO - Database connection pool closed
+2025-10-06 22:55:23,288 - __main__ - INFO - ✅ Scheduled scraping completed successfully
+2025-10-06 22:57:22,763 - __main__ - INFO - 🎯 Pinnacle Odds Scheduler Starting...
+2025-10-06 22:57:22,764 - __main__ - INFO - 📅 Will scrape odds every 5 minutes (24/7 for testing)
+2025-10-06 22:57:22,764 - __main__ - INFO - 💰 Estimated daily cost: ~172,800 API credits (24/7 operation)
+2025-10-06 22:57:22,764 - __main__ - INFO - 🚀 Running initial scrape...
+2025-10-06 22:57:22,764 - __main__ - INFO - 🔄 Starting scheduled odds scraping...
+2025-10-06 22:57:22,922 - database.connection - INFO - Database connection pool initialized
+2025-10-06 22:57:22,922 - pinnacle_scraper - INFO - Database initialized successfully
+2025-10-06 22:57:22,923 - pinnacle_scraper - INFO - Starting Pinnacle odds scraping session
+2025-10-06 22:57:22,923 - pinnacle_scraper - INFO - Starting to scrape Pinnacle odds for all sports
+2025-10-06 22:57:22,923 - pinnacle_scraper - INFO - Processing sport: soccer_epl
+2025-10-06 22:57:22,923 - pinnacle_scraper - INFO - Fetching featured odds for soccer_epl
+2025-10-06 22:57:23,012 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_epl
+2025-10-06 22:57:23,164 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:57:23,568 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:57:23,568 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_epl
+2025-10-06 22:57:23,669 - pinnacle_scraper - INFO - Processing sport: soccer_efl_champ
+2025-10-06 22:57:23,670 - pinnacle_scraper - INFO - Fetching featured odds for soccer_efl_champ
+2025-10-06 22:57:23,725 - pinnacle_scraper - INFO - Retrieved 12 events for soccer_efl_champ
+2025-10-06 22:57:23,827 - pinnacle_scraper - INFO - Inserted 84 odds records into database
+2025-10-06 22:57:24,074 - pinnacle_scraper - INFO - Inserted 84 price history records
+2025-10-06 22:57:24,074 - pinnacle_scraper - INFO - Processed 84 odds entries for soccer_efl_champ
+2025-10-06 22:57:24,174 - pinnacle_scraper - INFO - Processing sport: soccer_spain_la_liga
+2025-10-06 22:57:24,174 - pinnacle_scraper - INFO - Fetching featured odds for soccer_spain_la_liga
+2025-10-06 22:57:24,218 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_spain_la_liga
+2025-10-06 22:57:24,375 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:57:24,730 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:57:24,730 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_spain_la_liga
+2025-10-06 22:57:24,831 - pinnacle_scraper - INFO - Processing sport: soccer_germany_bundesliga
+2025-10-06 22:57:24,831 - pinnacle_scraper - INFO - Fetching featured odds for soccer_germany_bundesliga
+2025-10-06 22:57:24,869 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_germany_bundesliga
+2025-10-06 22:57:25,017 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:57:25,344 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:57:25,344 - pinnacle_scraper - INFO - Processed 126 odds entries for soccer_germany_bundesliga
+2025-10-06 22:57:25,444 - pinnacle_scraper - INFO - Processing sport: soccer_italy_serie_a
+2025-10-06 22:57:25,445 - pinnacle_scraper - INFO - Fetching featured odds for soccer_italy_serie_a
+2025-10-06 22:57:25,486 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_italy_serie_a
+2025-10-06 22:57:25,641 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 22:57:26,018 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 22:57:26,018 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_italy_serie_a
+2025-10-06 22:57:26,119 - pinnacle_scraper - INFO - Processing sport: soccer_france_ligue_one
+2025-10-06 22:57:26,119 - pinnacle_scraper - INFO - Fetching featured odds for soccer_france_ligue_one
+2025-10-06 22:57:26,163 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_france_ligue_one
+2025-10-06 22:57:26,292 - pinnacle_scraper - INFO - Inserted 112 odds records into database
+2025-10-06 22:57:26,630 - pinnacle_scraper - INFO - Inserted 112 price history records
+2025-10-06 22:57:26,630 - pinnacle_scraper - INFO - Processed 112 odds entries for soccer_france_ligue_one
+2025-10-06 22:57:26,731 - pinnacle_scraper - INFO - Processing sport: americanfootball_nfl
+2025-10-06 22:57:26,731 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_nfl
+2025-10-06 22:57:26,830 - pinnacle_scraper - INFO - Retrieved 13 events for americanfootball_nfl
+2025-10-06 22:57:26,924 - pinnacle_scraper - INFO - Inserted 72 odds records into database
+2025-10-06 22:57:27,125 - pinnacle_scraper - INFO - Inserted 72 price history records
+2025-10-06 22:57:27,125 - pinnacle_scraper - INFO - Processed 72 odds entries for americanfootball_nfl
+2025-10-06 22:57:27,226 - pinnacle_scraper - INFO - Processing sport: basketball_nba
+2025-10-06 22:57:27,226 - pinnacle_scraper - INFO - Fetching featured odds for basketball_nba
+2025-10-06 22:57:27,290 - pinnacle_scraper - INFO - Retrieved 44 events for basketball_nba
+2025-10-06 22:57:27,488 - pinnacle_scraper - INFO - Inserted 12 odds records into database
+2025-10-06 22:57:27,523 - pinnacle_scraper - INFO - Inserted 12 price history records
+2025-10-06 22:57:27,524 - pinnacle_scraper - INFO - Processed 12 odds entries for basketball_nba
+2025-10-06 22:57:27,624 - pinnacle_scraper - INFO - Processing sport: icehockey_nhl
+2025-10-06 22:57:27,624 - pinnacle_scraper - INFO - Fetching featured odds for icehockey_nhl
+2025-10-06 22:57:27,697 - pinnacle_scraper - INFO - Retrieved 21 events for icehockey_nhl
+2025-10-06 22:57:27,845 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 22:57:28,197 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 22:57:28,197 - pinnacle_scraper - INFO - Processed 126 odds entries for icehockey_nhl
+2025-10-06 22:57:28,298 - pinnacle_scraper - INFO - Processing sport: baseball_mlb
+2025-10-06 22:57:28,298 - pinnacle_scraper - INFO - Fetching featured odds for baseball_mlb
+2025-10-06 22:57:28,341 - pinnacle_scraper - INFO - Retrieved 3 events for baseball_mlb
+2025-10-06 22:57:28,367 - pinnacle_scraper - INFO - Inserted 18 odds records into database
+2025-10-06 22:57:28,418 - pinnacle_scraper - INFO - Inserted 18 price history records
+2025-10-06 22:57:28,418 - pinnacle_scraper - INFO - Processed 18 odds entries for baseball_mlb
+2025-10-06 22:57:28,519 - pinnacle_scraper - INFO - Processing sport: americanfootball_ncaaf
+2025-10-06 22:57:28,519 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_ncaaf
+2025-10-06 22:57:28,577 - pinnacle_scraper - INFO - Retrieved 56 events for americanfootball_ncaaf
+2025-10-06 22:57:28,971 - pinnacle_scraper - INFO - Inserted 334 odds records into database
+2025-10-06 22:57:29,832 - pinnacle_scraper - INFO - Inserted 334 price history records
+2025-10-06 22:57:29,832 - pinnacle_scraper - INFO - Processed 334 odds entries for americanfootball_ncaaf
+2025-10-06 22:57:29,932 - pinnacle_scraper - INFO - Processing sport: basketball_ncaab
+2025-10-06 22:57:29,933 - pinnacle_scraper - INFO - Fetching featured odds for basketball_ncaab
+2025-10-06 22:57:30,052 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:57:30,052 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 22:57:30,153 - pinnacle_scraper - INFO - Total odds entries scraped: 1304
+2025-10-06 22:57:30,507 - pinnacle_scraper - INFO - Retrieved 1000 previous odds from database
+2025-10-06 22:57:30,509 - pinnacle_scraper - INFO - Detected 0 significant odds drops (better prices)
+2025-10-06 22:57:30,509 - pinnacle_scraper - INFO - No significant odds changes detected
+2025-10-06 22:57:30,509 - pinnacle_scraper - INFO - Scraping session completed
+2025-10-06 22:57:30,517 - database.connection - INFO - Database connection pool closed
+2025-10-06 22:57:30,518 - __main__ - INFO - ✅ Scheduled scraping completed successfully
+2025-10-06 23:00:23,655 - __main__ - INFO - 🔄 Starting scheduled odds scraping...
+2025-10-06 23:00:23,810 - database.connection - INFO - Database connection pool initialized
+2025-10-06 23:00:23,810 - pinnacle_scraper - INFO - Database initialized successfully
+2025-10-06 23:00:23,813 - pinnacle_scraper - INFO - Starting Pinnacle odds scraping session
+2025-10-06 23:00:23,813 - pinnacle_scraper - INFO - Starting to scrape Pinnacle odds for all sports
+2025-10-06 23:00:23,813 - pinnacle_scraper - INFO - Processing sport: soccer_epl
+2025-10-06 23:00:23,813 - pinnacle_scraper - INFO - Fetching featured odds for soccer_epl
+2025-10-06 23:00:23,917 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_epl
+2025-10-06 23:00:24,104 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:00:24,515 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:00:24,515 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_epl
+2025-10-06 23:00:24,616 - pinnacle_scraper - INFO - Processing sport: soccer_efl_champ
+2025-10-06 23:00:24,616 - pinnacle_scraper - INFO - Fetching featured odds for soccer_efl_champ
+2025-10-06 23:00:24,674 - pinnacle_scraper - INFO - Retrieved 12 events for soccer_efl_champ
+2025-10-06 23:00:24,785 - pinnacle_scraper - INFO - Inserted 84 odds records into database
+2025-10-06 23:00:25,031 - pinnacle_scraper - INFO - Inserted 84 price history records
+2025-10-06 23:00:25,031 - pinnacle_scraper - INFO - Processed 84 odds entries for soccer_efl_champ
+2025-10-06 23:00:25,132 - pinnacle_scraper - INFO - Processing sport: soccer_spain_la_liga
+2025-10-06 23:00:25,132 - pinnacle_scraper - INFO - Fetching featured odds for soccer_spain_la_liga
+2025-10-06 23:00:25,174 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_spain_la_liga
+2025-10-06 23:00:25,345 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:00:25,735 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:00:25,735 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_spain_la_liga
+2025-10-06 23:00:25,835 - pinnacle_scraper - INFO - Processing sport: soccer_germany_bundesliga
+2025-10-06 23:00:25,836 - pinnacle_scraper - INFO - Fetching featured odds for soccer_germany_bundesliga
+2025-10-06 23:00:25,896 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_germany_bundesliga
+2025-10-06 23:00:26,054 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 23:00:26,442 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 23:00:26,442 - pinnacle_scraper - INFO - Processed 126 odds entries for soccer_germany_bundesliga
+2025-10-06 23:00:26,543 - pinnacle_scraper - INFO - Processing sport: soccer_italy_serie_a
+2025-10-06 23:00:26,543 - pinnacle_scraper - INFO - Fetching featured odds for soccer_italy_serie_a
+2025-10-06 23:00:26,588 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_italy_serie_a
+2025-10-06 23:00:26,752 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:00:27,163 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:00:27,163 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_italy_serie_a
+2025-10-06 23:00:27,264 - pinnacle_scraper - INFO - Processing sport: soccer_france_ligue_one
+2025-10-06 23:00:27,265 - pinnacle_scraper - INFO - Fetching featured odds for soccer_france_ligue_one
+2025-10-06 23:00:27,328 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_france_ligue_one
+2025-10-06 23:00:27,474 - pinnacle_scraper - INFO - Inserted 112 odds records into database
+2025-10-06 23:00:27,801 - pinnacle_scraper - INFO - Inserted 112 price history records
+2025-10-06 23:00:27,802 - pinnacle_scraper - INFO - Processed 112 odds entries for soccer_france_ligue_one
+2025-10-06 23:00:27,902 - pinnacle_scraper - INFO - Processing sport: americanfootball_nfl
+2025-10-06 23:00:27,902 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_nfl
+2025-10-06 23:00:27,965 - pinnacle_scraper - INFO - Retrieved 13 events for americanfootball_nfl
+2025-10-06 23:00:28,081 - pinnacle_scraper - INFO - Inserted 72 odds records into database
+2025-10-06 23:00:28,282 - pinnacle_scraper - INFO - Inserted 72 price history records
+2025-10-06 23:00:28,283 - pinnacle_scraper - INFO - Processed 72 odds entries for americanfootball_nfl
+2025-10-06 23:00:28,383 - pinnacle_scraper - INFO - Processing sport: basketball_nba
+2025-10-06 23:00:28,384 - pinnacle_scraper - INFO - Fetching featured odds for basketball_nba
+2025-10-06 23:00:28,444 - pinnacle_scraper - INFO - Retrieved 44 events for basketball_nba
+2025-10-06 23:00:28,638 - pinnacle_scraper - INFO - Inserted 12 odds records into database
+2025-10-06 23:00:28,674 - pinnacle_scraper - INFO - Inserted 12 price history records
+2025-10-06 23:00:28,674 - pinnacle_scraper - INFO - Processed 12 odds entries for basketball_nba
+2025-10-06 23:00:28,774 - pinnacle_scraper - INFO - Processing sport: icehockey_nhl
+2025-10-06 23:00:28,774 - pinnacle_scraper - INFO - Fetching featured odds for icehockey_nhl
+2025-10-06 23:00:28,822 - pinnacle_scraper - INFO - Retrieved 21 events for icehockey_nhl
+2025-10-06 23:00:28,964 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 23:00:29,334 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 23:00:29,335 - pinnacle_scraper - INFO - Processed 126 odds entries for icehockey_nhl
+2025-10-06 23:00:29,435 - pinnacle_scraper - INFO - Processing sport: baseball_mlb
+2025-10-06 23:00:29,435 - pinnacle_scraper - INFO - Fetching featured odds for baseball_mlb
+2025-10-06 23:00:29,484 - pinnacle_scraper - INFO - Retrieved 3 events for baseball_mlb
+2025-10-06 23:00:29,514 - pinnacle_scraper - INFO - Inserted 18 odds records into database
+2025-10-06 23:00:29,567 - pinnacle_scraper - INFO - Inserted 18 price history records
+2025-10-06 23:00:29,568 - pinnacle_scraper - INFO - Processed 18 odds entries for baseball_mlb
+2025-10-06 23:00:29,668 - pinnacle_scraper - INFO - Processing sport: americanfootball_ncaaf
+2025-10-06 23:00:29,668 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_ncaaf
+2025-10-06 23:00:29,727 - pinnacle_scraper - INFO - Retrieved 56 events for americanfootball_ncaaf
+2025-10-06 23:00:30,353 - pinnacle_scraper - INFO - Inserted 334 odds records into database
+2025-10-06 23:00:31,347 - pinnacle_scraper - INFO - Inserted 334 price history records
+2025-10-06 23:00:31,348 - pinnacle_scraper - INFO - Processed 334 odds entries for americanfootball_ncaaf
+2025-10-06 23:00:31,448 - pinnacle_scraper - INFO - Processing sport: basketball_ncaab
+2025-10-06 23:00:31,448 - pinnacle_scraper - INFO - Fetching featured odds for basketball_ncaab
+2025-10-06 23:00:31,495 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 23:00:31,495 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 23:00:31,596 - pinnacle_scraper - INFO - Total odds entries scraped: 1304
+2025-10-06 23:00:31,975 - pinnacle_scraper - INFO - Retrieved 1000 previous odds from database
+2025-10-06 23:00:31,977 - pinnacle_scraper - INFO - Detected 0 significant odds drops (better prices)
+2025-10-06 23:00:31,977 - pinnacle_scraper - INFO - No significant odds changes detected
+2025-10-06 23:00:31,977 - pinnacle_scraper - INFO - Scraping session completed
+2025-10-06 23:00:31,985 - database.connection - INFO - Database connection pool closed
+2025-10-06 23:00:31,986 - __main__ - INFO - ✅ Scheduled scraping completed successfully
+2025-10-06 23:02:22,874 - __main__ - INFO - 🔄 Starting scheduled odds scraping...
+2025-10-06 23:02:23,017 - database.connection - INFO - Database connection pool initialized
+2025-10-06 23:02:23,017 - pinnacle_scraper - INFO - Database initialized successfully
+2025-10-06 23:02:23,018 - pinnacle_scraper - INFO - Starting Pinnacle odds scraping session
+2025-10-06 23:02:23,018 - pinnacle_scraper - INFO - Starting to scrape Pinnacle odds for all sports
+2025-10-06 23:02:23,018 - pinnacle_scraper - INFO - Processing sport: soccer_epl
+2025-10-06 23:02:23,019 - pinnacle_scraper - INFO - Fetching featured odds for soccer_epl
+2025-10-06 23:02:23,140 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_epl
+2025-10-06 23:02:23,323 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:02:23,744 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:02:23,744 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_epl
+2025-10-06 23:02:23,845 - pinnacle_scraper - INFO - Processing sport: soccer_efl_champ
+2025-10-06 23:02:23,846 - pinnacle_scraper - INFO - Fetching featured odds for soccer_efl_champ
+2025-10-06 23:02:23,897 - pinnacle_scraper - INFO - Retrieved 12 events for soccer_efl_champ
+2025-10-06 23:02:24,022 - pinnacle_scraper - INFO - Inserted 84 odds records into database
+2025-10-06 23:02:24,272 - pinnacle_scraper - INFO - Inserted 84 price history records
+2025-10-06 23:02:24,272 - pinnacle_scraper - INFO - Processed 84 odds entries for soccer_efl_champ
+2025-10-06 23:02:24,372 - pinnacle_scraper - INFO - Processing sport: soccer_spain_la_liga
+2025-10-06 23:02:24,373 - pinnacle_scraper - INFO - Fetching featured odds for soccer_spain_la_liga
+2025-10-06 23:02:24,418 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_spain_la_liga
+2025-10-06 23:02:24,576 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:02:24,998 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:02:24,998 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_spain_la_liga
+2025-10-06 23:02:25,099 - pinnacle_scraper - INFO - Processing sport: soccer_germany_bundesliga
+2025-10-06 23:02:25,099 - pinnacle_scraper - INFO - Fetching featured odds for soccer_germany_bundesliga
+2025-10-06 23:02:25,155 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_germany_bundesliga
+2025-10-06 23:02:25,299 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 23:02:25,663 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 23:02:25,663 - pinnacle_scraper - INFO - Processed 126 odds entries for soccer_germany_bundesliga
+2025-10-06 23:02:25,764 - pinnacle_scraper - INFO - Processing sport: soccer_italy_serie_a
+2025-10-06 23:02:25,764 - pinnacle_scraper - INFO - Fetching featured odds for soccer_italy_serie_a
+2025-10-06 23:02:25,822 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_italy_serie_a
+2025-10-06 23:02:25,994 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:02:26,396 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:02:26,396 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_italy_serie_a
+2025-10-06 23:02:26,497 - pinnacle_scraper - INFO - Processing sport: soccer_france_ligue_one
+2025-10-06 23:02:26,497 - pinnacle_scraper - INFO - Fetching featured odds for soccer_france_ligue_one
+2025-10-06 23:02:26,548 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_france_ligue_one
+2025-10-06 23:02:26,686 - pinnacle_scraper - INFO - Inserted 112 odds records into database
+2025-10-06 23:02:27,018 - pinnacle_scraper - INFO - Inserted 112 price history records
+2025-10-06 23:02:27,018 - pinnacle_scraper - INFO - Processed 112 odds entries for soccer_france_ligue_one
+2025-10-06 23:02:27,119 - pinnacle_scraper - INFO - Processing sport: americanfootball_nfl
+2025-10-06 23:02:27,119 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_nfl
+2025-10-06 23:02:27,181 - pinnacle_scraper - INFO - Retrieved 13 events for americanfootball_nfl
+2025-10-06 23:02:27,290 - pinnacle_scraper - INFO - Inserted 72 odds records into database
+2025-10-06 23:02:27,492 - pinnacle_scraper - INFO - Inserted 72 price history records
+2025-10-06 23:02:27,493 - pinnacle_scraper - INFO - Processed 72 odds entries for americanfootball_nfl
+2025-10-06 23:02:27,593 - pinnacle_scraper - INFO - Processing sport: basketball_nba
+2025-10-06 23:02:27,594 - pinnacle_scraper - INFO - Fetching featured odds for basketball_nba
+2025-10-06 23:02:27,656 - pinnacle_scraper - INFO - Retrieved 44 events for basketball_nba
+2025-10-06 23:02:27,851 - pinnacle_scraper - INFO - Inserted 12 odds records into database
+2025-10-06 23:02:27,891 - pinnacle_scraper - INFO - Inserted 12 price history records
+2025-10-06 23:02:27,891 - pinnacle_scraper - INFO - Processed 12 odds entries for basketball_nba
+2025-10-06 23:02:27,992 - pinnacle_scraper - INFO - Processing sport: icehockey_nhl
+2025-10-06 23:02:27,992 - pinnacle_scraper - INFO - Fetching featured odds for icehockey_nhl
+2025-10-06 23:02:28,046 - pinnacle_scraper - INFO - Retrieved 21 events for icehockey_nhl
+2025-10-06 23:02:28,227 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 23:02:28,595 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 23:02:28,595 - pinnacle_scraper - INFO - Processed 126 odds entries for icehockey_nhl
+2025-10-06 23:02:28,696 - pinnacle_scraper - INFO - Processing sport: baseball_mlb
+2025-10-06 23:02:28,696 - pinnacle_scraper - INFO - Fetching featured odds for baseball_mlb
+2025-10-06 23:02:28,743 - pinnacle_scraper - INFO - Retrieved 3 events for baseball_mlb
+2025-10-06 23:02:28,771 - pinnacle_scraper - INFO - Inserted 18 odds records into database
+2025-10-06 23:02:28,830 - pinnacle_scraper - INFO - Inserted 18 price history records
+2025-10-06 23:02:28,830 - pinnacle_scraper - INFO - Processed 18 odds entries for baseball_mlb
+2025-10-06 23:02:28,930 - pinnacle_scraper - INFO - Processing sport: americanfootball_ncaaf
+2025-10-06 23:02:28,931 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_ncaaf
+2025-10-06 23:02:28,985 - pinnacle_scraper - INFO - Retrieved 56 events for americanfootball_ncaaf
+2025-10-06 23:02:29,417 - pinnacle_scraper - INFO - Inserted 334 odds records into database
+2025-10-06 23:02:30,436 - pinnacle_scraper - INFO - Inserted 334 price history records
+2025-10-06 23:02:30,436 - pinnacle_scraper - INFO - Processed 334 odds entries for americanfootball_ncaaf
+2025-10-06 23:02:30,537 - pinnacle_scraper - INFO - Processing sport: basketball_ncaab
+2025-10-06 23:02:30,537 - pinnacle_scraper - INFO - Fetching featured odds for basketball_ncaab
+2025-10-06 23:02:30,595 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 23:02:30,596 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 23:02:30,696 - pinnacle_scraper - INFO - Total odds entries scraped: 1304
+2025-10-06 23:02:31,086 - pinnacle_scraper - INFO - Retrieved 1000 previous odds from database
+2025-10-06 23:02:31,088 - pinnacle_scraper - INFO - Detected 0 significant odds drops (better prices)
+2025-10-06 23:02:31,088 - pinnacle_scraper - INFO - No significant odds changes detected
+2025-10-06 23:02:31,088 - pinnacle_scraper - INFO - Scraping session completed
+2025-10-06 23:02:31,094 - database.connection - INFO - Database connection pool closed
+2025-10-06 23:02:31,096 - __main__ - INFO - ✅ Scheduled scraping completed successfully
+2025-10-06 23:05:32,346 - __main__ - INFO - 🔄 Starting scheduled odds scraping...
+2025-10-06 23:05:32,496 - database.connection - INFO - Database connection pool initialized
+2025-10-06 23:05:32,496 - pinnacle_scraper - INFO - Database initialized successfully
+2025-10-06 23:05:32,498 - pinnacle_scraper - INFO - Starting Pinnacle odds scraping session
+2025-10-06 23:05:32,498 - pinnacle_scraper - INFO - Starting to scrape Pinnacle odds for all sports
+2025-10-06 23:05:32,498 - pinnacle_scraper - INFO - Processing sport: soccer_epl
+2025-10-06 23:05:32,498 - pinnacle_scraper - INFO - Fetching featured odds for soccer_epl
+2025-10-06 23:05:32,591 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_epl
+2025-10-06 23:05:32,762 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:05:33,189 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:05:33,189 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_epl
+2025-10-06 23:05:33,290 - pinnacle_scraper - INFO - Processing sport: soccer_efl_champ
+2025-10-06 23:05:33,290 - pinnacle_scraper - INFO - Fetching featured odds for soccer_efl_champ
+2025-10-06 23:05:33,345 - pinnacle_scraper - INFO - Retrieved 12 events for soccer_efl_champ
+2025-10-06 23:05:33,448 - pinnacle_scraper - INFO - Inserted 84 odds records into database
+2025-10-06 23:05:33,695 - pinnacle_scraper - INFO - Inserted 84 price history records
+2025-10-06 23:05:33,695 - pinnacle_scraper - INFO - Processed 84 odds entries for soccer_efl_champ
+2025-10-06 23:05:33,796 - pinnacle_scraper - INFO - Processing sport: soccer_spain_la_liga
+2025-10-06 23:05:33,796 - pinnacle_scraper - INFO - Fetching featured odds for soccer_spain_la_liga
+2025-10-06 23:05:33,840 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_spain_la_liga
+2025-10-06 23:05:34,014 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:05:34,419 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:05:34,419 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_spain_la_liga
+2025-10-06 23:05:34,520 - pinnacle_scraper - INFO - Processing sport: soccer_germany_bundesliga
+2025-10-06 23:05:34,520 - pinnacle_scraper - INFO - Fetching featured odds for soccer_germany_bundesliga
+2025-10-06 23:05:34,563 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_germany_bundesliga
+2025-10-06 23:05:34,731 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 23:05:35,117 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 23:05:35,117 - pinnacle_scraper - INFO - Processed 126 odds entries for soccer_germany_bundesliga
+2025-10-06 23:05:35,218 - pinnacle_scraper - INFO - Processing sport: soccer_italy_serie_a
+2025-10-06 23:05:35,218 - pinnacle_scraper - INFO - Fetching featured odds for soccer_italy_serie_a
+2025-10-06 23:05:35,264 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_italy_serie_a
+2025-10-06 23:05:35,419 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:05:35,842 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:05:35,842 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_italy_serie_a
+2025-10-06 23:05:35,943 - pinnacle_scraper - INFO - Processing sport: soccer_france_ligue_one
+2025-10-06 23:05:35,943 - pinnacle_scraper - INFO - Fetching featured odds for soccer_france_ligue_one
+2025-10-06 23:05:36,000 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_france_ligue_one
+2025-10-06 23:05:36,147 - pinnacle_scraper - INFO - Inserted 112 odds records into database
+2025-10-06 23:05:36,464 - pinnacle_scraper - INFO - Inserted 112 price history records
+2025-10-06 23:05:36,465 - pinnacle_scraper - INFO - Processed 112 odds entries for soccer_france_ligue_one
+2025-10-06 23:05:36,565 - pinnacle_scraper - INFO - Processing sport: americanfootball_nfl
+2025-10-06 23:05:36,565 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_nfl
+2025-10-06 23:05:36,602 - pinnacle_scraper - INFO - Retrieved 13 events for americanfootball_nfl
+2025-10-06 23:05:36,726 - pinnacle_scraper - INFO - Inserted 72 odds records into database
+2025-10-06 23:05:36,952 - pinnacle_scraper - INFO - Inserted 72 price history records
+2025-10-06 23:05:36,952 - pinnacle_scraper - INFO - Processed 72 odds entries for americanfootball_nfl
+2025-10-06 23:05:37,053 - pinnacle_scraper - INFO - Processing sport: basketball_nba
+2025-10-06 23:05:37,053 - pinnacle_scraper - INFO - Fetching featured odds for basketball_nba
+2025-10-06 23:05:37,103 - pinnacle_scraper - INFO - Retrieved 44 events for basketball_nba
+2025-10-06 23:05:37,293 - pinnacle_scraper - INFO - Inserted 12 odds records into database
+2025-10-06 23:05:37,332 - pinnacle_scraper - INFO - Inserted 12 price history records
+2025-10-06 23:05:37,332 - pinnacle_scraper - INFO - Processed 12 odds entries for basketball_nba
+2025-10-06 23:05:37,432 - pinnacle_scraper - INFO - Processing sport: icehockey_nhl
+2025-10-06 23:05:37,432 - pinnacle_scraper - INFO - Fetching featured odds for icehockey_nhl
+2025-10-06 23:05:37,474 - pinnacle_scraper - INFO - Retrieved 21 events for icehockey_nhl
+2025-10-06 23:05:37,658 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 23:05:38,046 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 23:05:38,046 - pinnacle_scraper - INFO - Processed 126 odds entries for icehockey_nhl
+2025-10-06 23:05:38,147 - pinnacle_scraper - INFO - Processing sport: baseball_mlb
+2025-10-06 23:05:38,148 - pinnacle_scraper - INFO - Fetching featured odds for baseball_mlb
+2025-10-06 23:05:38,195 - pinnacle_scraper - INFO - Retrieved 3 events for baseball_mlb
+2025-10-06 23:05:38,228 - pinnacle_scraper - INFO - Inserted 18 odds records into database
+2025-10-06 23:05:38,283 - pinnacle_scraper - INFO - Inserted 18 price history records
+2025-10-06 23:05:38,283 - pinnacle_scraper - INFO - Processed 18 odds entries for baseball_mlb
+2025-10-06 23:05:38,384 - pinnacle_scraper - INFO - Processing sport: americanfootball_ncaaf
+2025-10-06 23:05:38,384 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_ncaaf
+2025-10-06 23:05:38,458 - pinnacle_scraper - INFO - Retrieved 56 events for americanfootball_ncaaf
+2025-10-06 23:05:38,885 - pinnacle_scraper - INFO - Inserted 334 odds records into database
+2025-10-06 23:05:39,864 - pinnacle_scraper - INFO - Inserted 334 price history records
+2025-10-06 23:05:39,864 - pinnacle_scraper - INFO - Processed 334 odds entries for americanfootball_ncaaf
+2025-10-06 23:05:39,965 - pinnacle_scraper - INFO - Processing sport: basketball_ncaab
+2025-10-06 23:05:39,965 - pinnacle_scraper - INFO - Fetching featured odds for basketball_ncaab
+2025-10-06 23:05:40,011 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 23:05:40,011 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 23:05:40,112 - pinnacle_scraper - INFO - Total odds entries scraped: 1304
+2025-10-06 23:05:40,479 - pinnacle_scraper - INFO - Retrieved 1000 previous odds from database
+2025-10-06 23:05:40,480 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: NCAAF - Georgia State Panthers vs Appalachian State Mountaineers | h2h - Appalachian State Mountaineers | -135.0 → -136 | Drop: 0.31%
+2025-10-06 23:05:40,480 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: NCAAF - Georgia State Panthers vs Appalachian State Mountaineers | totals - Under | -106.0 → -111 | Drop: 2.24%
+2025-10-06 23:05:40,481 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: NCAAF - Temple Owls vs Navy Midshipmen | h2h - Navy Midshipmen | -322.0 → -344 | Drop: 1.54%
+2025-10-06 23:05:40,481 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: NCAAF - Temple Owls vs Navy Midshipmen | spreads - Temple Owls | 100.0 → -105 | Drop: 2.44%
+2025-10-06 23:05:40,481 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: NCAAF - Temple Owls vs Navy Midshipmen | totals - Over | -114.0 → -116 | Drop: 0.81%
+2025-10-06 23:05:40,481 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: NCAAF - Boston College Eagles vs Clemson Tigers | spreads - Clemson Tigers | -105.0 → -107 | Drop: 0.92%
+2025-10-06 23:05:40,481 - pinnacle_scraper - INFO - 🔍 POTENTIAL DROP: NCAAF - Boston College Eagles vs Clemson Tigers | totals - Under | -104.0 → -113 | Drop: 4.06%
+2025-10-06 23:05:40,481 - pinnacle_scraper - INFO - Detected 0 significant odds drops (better prices)
+2025-10-06 23:05:40,482 - pinnacle_scraper - INFO - No significant odds changes detected
+2025-10-06 23:05:40,482 - pinnacle_scraper - INFO - Scraping session completed
+2025-10-06 23:05:40,489 - database.connection - INFO - Database connection pool closed
+2025-10-06 23:05:40,490 - __main__ - INFO - ✅ Scheduled scraping completed successfully
+2025-10-06 23:07:31,471 - __main__ - INFO - 🔄 Starting scheduled odds scraping...
+2025-10-06 23:07:31,631 - database.connection - INFO - Database connection pool initialized
+2025-10-06 23:07:31,631 - pinnacle_scraper - INFO - Database initialized successfully
+2025-10-06 23:07:31,632 - pinnacle_scraper - INFO - Starting Pinnacle odds scraping session
+2025-10-06 23:07:31,632 - pinnacle_scraper - INFO - Starting to scrape Pinnacle odds for all sports
+2025-10-06 23:07:31,633 - pinnacle_scraper - INFO - Processing sport: soccer_epl
+2025-10-06 23:07:31,633 - pinnacle_scraper - INFO - Fetching featured odds for soccer_epl
+2025-10-06 23:07:31,715 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_epl
+2025-10-06 23:07:31,884 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:07:32,295 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:07:32,295 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_epl
+2025-10-06 23:07:32,396 - pinnacle_scraper - INFO - Processing sport: soccer_efl_champ
+2025-10-06 23:07:32,396 - pinnacle_scraper - INFO - Fetching featured odds for soccer_efl_champ
+2025-10-06 23:07:32,445 - pinnacle_scraper - INFO - Retrieved 12 events for soccer_efl_champ
+2025-10-06 23:07:32,548 - pinnacle_scraper - INFO - Inserted 84 odds records into database
+2025-10-06 23:07:32,802 - pinnacle_scraper - INFO - Inserted 84 price history records
+2025-10-06 23:07:32,802 - pinnacle_scraper - INFO - Processed 84 odds entries for soccer_efl_champ
+2025-10-06 23:07:32,903 - pinnacle_scraper - INFO - Processing sport: soccer_spain_la_liga
+2025-10-06 23:07:32,903 - pinnacle_scraper - INFO - Fetching featured odds for soccer_spain_la_liga
+2025-10-06 23:07:32,947 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_spain_la_liga
+2025-10-06 23:07:33,108 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:07:33,520 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:07:33,520 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_spain_la_liga
+2025-10-06 23:07:33,620 - pinnacle_scraper - INFO - Processing sport: soccer_germany_bundesliga
+2025-10-06 23:07:33,621 - pinnacle_scraper - INFO - Fetching featured odds for soccer_germany_bundesliga
+2025-10-06 23:07:33,669 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_germany_bundesliga
+2025-10-06 23:07:33,822 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 23:07:34,180 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 23:07:34,180 - pinnacle_scraper - INFO - Processed 126 odds entries for soccer_germany_bundesliga
+2025-10-06 23:07:34,280 - pinnacle_scraper - INFO - Processing sport: soccer_italy_serie_a
+2025-10-06 23:07:34,281 - pinnacle_scraper - INFO - Fetching featured odds for soccer_italy_serie_a
+2025-10-06 23:07:34,324 - pinnacle_scraper - INFO - Retrieved 20 events for soccer_italy_serie_a
+2025-10-06 23:07:34,477 - pinnacle_scraper - INFO - Inserted 140 odds records into database
+2025-10-06 23:07:34,880 - pinnacle_scraper - INFO - Inserted 140 price history records
+2025-10-06 23:07:34,880 - pinnacle_scraper - INFO - Processed 140 odds entries for soccer_italy_serie_a
+2025-10-06 23:07:34,981 - pinnacle_scraper - INFO - Processing sport: soccer_france_ligue_one
+2025-10-06 23:07:34,981 - pinnacle_scraper - INFO - Fetching featured odds for soccer_france_ligue_one
+2025-10-06 23:07:35,044 - pinnacle_scraper - INFO - Retrieved 18 events for soccer_france_ligue_one
+2025-10-06 23:07:35,178 - pinnacle_scraper - INFO - Inserted 112 odds records into database
+2025-10-06 23:07:35,517 - pinnacle_scraper - INFO - Inserted 112 price history records
+2025-10-06 23:07:35,517 - pinnacle_scraper - INFO - Processed 112 odds entries for soccer_france_ligue_one
+2025-10-06 23:07:35,618 - pinnacle_scraper - INFO - Processing sport: americanfootball_nfl
+2025-10-06 23:07:35,618 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_nfl
+2025-10-06 23:07:35,664 - pinnacle_scraper - INFO - Retrieved 13 events for americanfootball_nfl
+2025-10-06 23:07:35,767 - pinnacle_scraper - INFO - Inserted 72 odds records into database
+2025-10-06 23:07:35,988 - pinnacle_scraper - INFO - Inserted 72 price history records
+2025-10-06 23:07:35,988 - pinnacle_scraper - INFO - Processed 72 odds entries for americanfootball_nfl
+2025-10-06 23:07:36,089 - pinnacle_scraper - INFO - Processing sport: basketball_nba
+2025-10-06 23:07:36,089 - pinnacle_scraper - INFO - Fetching featured odds for basketball_nba
+2025-10-06 23:07:36,129 - pinnacle_scraper - INFO - Retrieved 44 events for basketball_nba
+2025-10-06 23:07:36,320 - pinnacle_scraper - INFO - Inserted 12 odds records into database
+2025-10-06 23:07:36,356 - pinnacle_scraper - INFO - Inserted 12 price history records
+2025-10-06 23:07:36,357 - pinnacle_scraper - INFO - Processed 12 odds entries for basketball_nba
+2025-10-06 23:07:36,457 - pinnacle_scraper - INFO - Processing sport: icehockey_nhl
+2025-10-06 23:07:36,457 - pinnacle_scraper - INFO - Fetching featured odds for icehockey_nhl
+2025-10-06 23:07:36,510 - pinnacle_scraper - INFO - Retrieved 21 events for icehockey_nhl
+2025-10-06 23:07:36,685 - pinnacle_scraper - INFO - Inserted 126 odds records into database
+2025-10-06 23:07:37,059 - pinnacle_scraper - INFO - Inserted 126 price history records
+2025-10-06 23:07:37,059 - pinnacle_scraper - INFO - Processed 126 odds entries for icehockey_nhl
+2025-10-06 23:07:37,160 - pinnacle_scraper - INFO - Processing sport: baseball_mlb
+2025-10-06 23:07:37,161 - pinnacle_scraper - INFO - Fetching featured odds for baseball_mlb
+2025-10-06 23:07:37,206 - pinnacle_scraper - INFO - Retrieved 3 events for baseball_mlb
+2025-10-06 23:07:37,241 - pinnacle_scraper - INFO - Inserted 18 odds records into database
+2025-10-06 23:07:37,294 - pinnacle_scraper - INFO - Inserted 18 price history records
+2025-10-06 23:07:37,294 - pinnacle_scraper - INFO - Processed 18 odds entries for baseball_mlb
+2025-10-06 23:07:37,395 - pinnacle_scraper - INFO - Processing sport: americanfootball_ncaaf
+2025-10-06 23:07:37,395 - pinnacle_scraper - INFO - Fetching featured odds for americanfootball_ncaaf
+2025-10-06 23:07:37,459 - pinnacle_scraper - INFO - Retrieved 56 events for americanfootball_ncaaf
+2025-10-06 23:07:37,893 - pinnacle_scraper - INFO - Inserted 334 odds records into database
+2025-10-06 23:07:38,905 - pinnacle_scraper - INFO - Inserted 334 price history records
+2025-10-06 23:07:38,906 - pinnacle_scraper - INFO - Processed 334 odds entries for americanfootball_ncaaf
+2025-10-06 23:07:39,006 - pinnacle_scraper - INFO - Processing sport: basketball_ncaab
+2025-10-06 23:07:39,007 - pinnacle_scraper - INFO - Fetching featured odds for basketball_ncaab
+2025-10-06 23:07:39,058 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 23:07:39,059 - pinnacle_scraper - WARNING - No data retrieved for basketball_ncaab
+2025-10-06 23:07:39,160 - pinnacle_scraper - INFO - Total odds entries scraped: 1304
+2025-10-06 23:07:39,532 - pinnacle_scraper - INFO - Retrieved 1000 previous odds from database
+2025-10-06 23:07:39,534 - pinnacle_scraper - INFO - Detected 0 significant odds drops (better prices)
+2025-10-06 23:07:39,534 - pinnacle_scraper - INFO - No significant odds changes detected
+2025-10-06 23:07:39,534 - pinnacle_scraper - INFO - Scraping session completed
+2025-10-06 23:07:39,540 - database.connection - INFO - Database connection pool closed
+2025-10-06 23:07:39,541 - __main__ - INFO - ✅ Scheduled scraping completed successfully
