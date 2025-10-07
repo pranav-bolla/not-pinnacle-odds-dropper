@@ -461,12 +461,20 @@ class PinnacleOddsScraper:
         # Create lookup dictionary for previous odds
         previous_lookup = {}
         for prev in previous_odds:
-            key = (prev.event_id, prev.market_type, prev.team_name)
+            # For spreads and totals, include point value to track the same line over time
+            if prev.market_type in ['spreads', 'totals'] and prev.point is not None:
+                key = (prev.event_id, prev.market_type, prev.team_name, prev.point)
+            else:
+                key = (prev.event_id, prev.market_type, prev.team_name)
             previous_lookup[key] = prev
         
         # Check for changes in current odds
         for current in current_odds:
-            key = (current.event_id, current.market_type, current.team_name)
+            # For spreads and totals, include point value to track the same line over time
+            if current.market_type in ['spreads', 'totals'] and current.point is not None:
+                key = (current.event_id, current.market_type, current.team_name, current.point)
+            else:
+                key = (current.event_id, current.market_type, current.team_name)
             
             if key in previous_lookup:
                 previous = previous_lookup[key]

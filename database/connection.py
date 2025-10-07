@@ -230,10 +230,10 @@ class DatabaseManager:
         """Get recent odds changes with both sides of the market for no-vig calculation"""
         query = """
         WITH current_odds AS (
-            SELECT DISTINCT ON (event_id, market_id, team_name)
-                event_id, market_id, team_name, odds_value
+            SELECT DISTINCT ON (event_id, market_id, team_name, point_value)
+                event_id, market_id, team_name, point_value, odds_value
             FROM odds
-            ORDER BY event_id, market_id, team_name, scraped_at DESC
+            ORDER BY event_id, market_id, team_name, point_value, scraped_at DESC
         )
         SELECT 
             oc.id,
@@ -266,12 +266,22 @@ class DatabaseManager:
                      FROM current_odds co 
                      WHERE co.event_id = oc.event_id 
                      AND co.market_id = oc.market_id)
-                WHEN m.market_key IN ('spreads', 'totals') THEN
-                    -- For two-way markets, get the other side
+                WHEN m.market_key = 'spreads' THEN
+                    -- For spreads, get the opposite side (different team, negative point value)
+                    -- Team A +1.5 is equivalent to Team B -1.5
                     (SELECT co.odds_value::text FROM current_odds co 
                      WHERE co.event_id = oc.event_id 
                      AND co.market_id = oc.market_id 
                      AND co.team_name != oc.team_name
+                     AND co.point_value = -oc.point_value
+                     LIMIT 1)
+                WHEN m.market_key = 'totals' THEN
+                    -- For totals, get the opposite side (Over vs Under)
+                    (SELECT co.odds_value::text FROM current_odds co 
+                     WHERE co.event_id = oc.event_id 
+                     AND co.market_id = oc.market_id 
+                     AND co.team_name != oc.team_name
+                     AND co.point_value = oc.point_value
                      LIMIT 1)
                 WHEN m.market_key = 'h2h' THEN
                     -- For non-soccer two-way moneyline, get the other side
