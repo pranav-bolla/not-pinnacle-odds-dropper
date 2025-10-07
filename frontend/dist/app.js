@@ -319,11 +319,16 @@ class PinnacleOddsApp {
             const select = document.getElementById('market-filter');
             select.innerHTML = '<option value="">All Markets</option>';
             
+            // Only show markets we're actually scraping
+            const allowedMarkets = ['h2h', 'spreads', 'totals'];
+            
             data.markets.forEach(market => {
-                const option = document.createElement('option');
-                option.value = market.market_key;
-                option.textContent = market.market_name;
-                select.appendChild(option);
+                if (allowedMarkets.includes(market.market_key)) {
+                    const option = document.createElement('option');
+                    option.value = market.market_key;
+                    option.textContent = market.market_name;
+                    select.appendChild(option);
+                }
             });
         } catch (error) {
             console.error('Error loading markets:', error);
