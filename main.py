@@ -93,6 +93,10 @@ class PinnacleOddsScraper:
         self.soccer_sports = [
             "soccer_epl",                                    # English Premier League
             "soccer_efl_champ",                             # English Championship
+            "soccer_spain_la_liga",                         # La Liga - Spain
+            "soccer_germany_bundesliga",                    # Bundesliga - Germany
+            "soccer_italy_serie_a",                         # Serie A - Italy
+            "soccer_france_ligue_one",                      # Ligue 1 - France
         ]
         
         # Other sports (secondary)
@@ -239,11 +243,11 @@ class PinnacleOddsScraper:
             home_team = event.get("home_team")
             away_team = event.get("away_team")
             
-            # Get sport ID
+            # Get sport ID, insert if not found
             sport_id = await get_db_manager().get_sport_id(sport_key)
             if not sport_id:
-                logger.warning(f"Sport {sport_key} not found in database")
-                continue
+                logger.info(f"Sport {sport_key} not found in database, inserting new sport")
+                sport_id = await get_db_manager().insert_sport(sport_key, sport_title)
             
             # Convert commence_time string to datetime object
             commence_datetime = datetime.fromisoformat(commence_time.replace('Z', '+00:00'))

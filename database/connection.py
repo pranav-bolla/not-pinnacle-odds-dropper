@@ -126,6 +126,20 @@ class DatabaseManager:
         result = await self.fetch_one(query, sport_key)
         return result['id'] if result else None
     
+    async def insert_sport(self, sport_key: str, sport_title: str) -> uuid.UUID:
+        """Insert a new sport and return its ID"""
+        query = """
+        INSERT INTO sports (sport_key, sport_title, active)
+        VALUES ($1, $2, true)
+        ON CONFLICT (sport_key) DO UPDATE SET
+            sport_title = EXCLUDED.sport_title,
+            active = true,
+            updated_at = CURRENT_TIMESTAMP
+        RETURNING id
+        """
+        result = await self.fetch_one(query, sport_key, sport_title)
+        return result['id']
+    
     async def get_market_id(self, market_key: str) -> Optional[uuid.UUID]:
         """Get market ID by market key"""
         query = "SELECT id FROM markets WHERE market_key = $1 AND active = true"
