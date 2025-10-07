@@ -1,5 +1,5 @@
 /**
- * Pinnacle Odds Tracker - Frontend Application
+ * Not Pinnacle Odds Tracker - Frontend Application
  * Real-time odds tracking with WebSocket connections
  */
 
@@ -666,12 +666,25 @@ class PinnacleOddsApp {
             outcomeText = `${change.team_name} ${spreadSign}${change.point_value}`;
         }
         
-        // Calculate proper no-vig price using both sides
-        let noVigPriceFormatted = '--';
-        if (change.other_side_odds) {
-            const noVigPrice = this.calculateNoVigPrice(change.new_odds, change.other_side_odds);
-            noVigPriceFormatted = this.formatOdds(noVigPrice);
-        }
+                // Calculate proper no-vig price
+                let noVigPriceFormatted = '--';
+                if (change.other_side_odds) {
+                    if (change.market_key === 'h2h' && typeof change.other_side_odds === 'string' && change.other_side_odds.includes(',')) {
+                        // Soccer three-way moneyline - parse comma-separated string and calculate no-vig using all three sides
+                        const allOdds = change.other_side_odds.split(',').map(odds => parseFloat(odds));
+                        const noVigPrice = this.calculateThreeWayNoVigPrice(change.new_odds, allOdds);
+                        noVigPriceFormatted = this.formatOdds(noVigPrice);
+                    } else if (typeof change.other_side_odds === 'string' && !change.other_side_odds.includes(',')) {
+                        // Two-way market with string odds - convert to number
+                        const otherOdds = parseFloat(change.other_side_odds);
+                        const noVigPrice = this.calculateNoVigPrice(change.new_odds, otherOdds);
+                        noVigPriceFormatted = this.formatOdds(noVigPrice);
+                    } else if (typeof change.other_side_odds === 'number') {
+                        // Two-way market with number odds
+                        const noVigPrice = this.calculateNoVigPrice(change.new_odds, change.other_side_odds);
+                        noVigPriceFormatted = this.formatOdds(noVigPrice);
+                    }
+                }
         
         // Format drop value
         const dropValue = change.change_percentage.toFixed(1) + '%';
@@ -683,7 +696,7 @@ class PinnacleOddsApp {
                     <div class="match-teams">${change.home_team} vs ${change.away_team}</div>
                     <div class="match-meta">
                         <span class="sport-badge">${change.sport_title}</span>
-                        <span class="market-badge">${change.market_name}</span>
+                        <span class="market-badge">${change.market_key === 'h2h' ? 'Moneyline (3-way)' : change.market_name}</span>
                     </div>
                 </div>
             </td>
@@ -865,6 +878,46 @@ class PinnacleOddsApp {
             ((1 - noVigProb1) * 100) / noVigProb1;
         
         return Math.round(noVigOdds1);
+    }
+
+    calculateThreeWayNoVigPrice(currentOdds, allOdds) {
+        // For three-way moneyline, calculate no-vig using all three sides
+        // Based on the example: Home +150, Draw +240, Away +180
+        
+        // Convert all odds to implied probabilities
+        const probabilities = allOdds.map(odds => 
+            odds > 0 ? 100 / (odds + 100) : Math.abs(odds) / (Math.abs(odds) + 100)
+        );
+        
+        // Calculate total probability (including vig)
+        const totalProb = probabilities.reduce((sum, prob) => sum + prob, 0);
+        
+        // Find the index of the current odds in the array
+        const currentIndex = allOdds.findIndex(odds => Math.abs(odds - currentOdds) < 0.01);
+        
+        if (currentIndex === -1) {
+            // Fallback to two-way calculation if current odds not found
+            return this.calculateNoVigPrice(currentOdds, allOdds[0]);
+        }
+        
+        // Remove vig by normalizing probabilities (divide each by total)
+        const noVigProb = probabilities[currentIndex] / totalProb;
+        
+        // Convert back to American odds
+        // Fair decimal odds = 1 / noVigProb
+        // American odds = (1 / noVigProb - 1) * 100 (if > 1) or -100 / (1 / noVigProb - 1) (if < 1)
+        const fairDecimal = 1 / noVigProb;
+        
+        let noVigOdds;
+        if (fairDecimal >= 2) {
+            // Positive American odds
+            noVigOdds = (fairDecimal - 1) * 100;
+        } else {
+            // Negative American odds
+            noVigOdds = -100 / (fairDecimal - 1);
+        }
+        
+        return Math.round(noVigOdds);
     }
 
     formatTimeUntilStart(commenceTime) {

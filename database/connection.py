@@ -240,18 +240,32 @@ class DatabaseManager:
             oc.change_type,
             oc.detected_at,
             oc.is_flagged,
-            -- Get the other side's current odds for no-vig calculation
+            -- Get the other sides' current odds for no-vig calculation
             CASE 
-                WHEN m.market_key = 'h2h' THEN
-                    (SELECT co.odds_value FROM current_odds co 
+                WHEN m.market_key = 'h2h' AND s.sport_key IN ('soccer_epl', 'soccer_uefa_champs_league', 'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_italy_serie_a', 'soccer_france_ligue_one', 'soccer_efl_champ', 'soccer_uefa_europa_league', 'soccer_uefa_europa_conference_league') THEN
+                    -- For soccer three-way moneyline, get all three sides as comma-separated string
+                    (SELECT string_agg(co.odds_value::text, ',' ORDER BY 
+                        CASE co.team_name 
+                            WHEN 'Draw' THEN 1
+                            ELSE 0 
+                        END, co.team_name) 
+                     FROM current_odds co 
                      WHERE co.event_id = oc.event_id 
-                     AND co.market_id = oc.market_id 
-                     AND co.team_name != oc.team_name)
+                     AND co.market_id = oc.market_id)
                 WHEN m.market_key IN ('spreads', 'totals') THEN
-                    (SELECT co.odds_value FROM current_odds co 
+                    -- For two-way markets, get the other side
+                    (SELECT co.odds_value::text FROM current_odds co 
                      WHERE co.event_id = oc.event_id 
                      AND co.market_id = oc.market_id 
-                     AND co.team_name != oc.team_name)
+                     AND co.team_name != oc.team_name
+                     LIMIT 1)
+                WHEN m.market_key = 'h2h' THEN
+                    -- For non-soccer two-way moneyline, get the other side
+                    (SELECT co.odds_value::text FROM current_odds co 
+                     WHERE co.event_id = oc.event_id 
+                     AND co.market_id = oc.market_id 
+                     AND co.team_name != oc.team_name
+                     LIMIT 1)
                 ELSE NULL
             END as other_side_odds
         FROM odds_changes oc
