@@ -426,6 +426,127 @@ class DatabaseManager:
             return int(result.split()[-1])
         return 0
 
+    async def insert_bet(self, event_id: uuid.UUID, market_id: uuid.UUID, team_name: str, 
+                        odds_value: float, stake: float, no_vig_odds: float, 
+                        expected_value: float, point_value: Optional[float] = None,
+                        bet_type: str = 'moneyline', notes: Optional[str] = None) -> uuid.UUID:
+        """Insert a new bet into the database"""
+        query = """
+        INSERT INTO bets (event_id, market_id, team_name, odds_value, stake, 
+                         no_vig_odds, expected_value, point_value, bet_type, notes)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        RETURNING id
+        """
+        result = await self.fetch_one(query, event_id, market_id, team_name, 
+                                    odds_value, stake, no_vig_odds, expected_value, 
+                                    point_value, bet_type, notes)
+        return result['id']
+
+    async def get_bets(self, limit: int = 100, offset: int = 0, 
+                      status_filter: Optional[str] = None,
+                      search_term: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Get all logged bets with optional filtering"""
+        base_query = """
+        SELECT 
+            b.id,
+            b.odds_value,
+            b.stake,
+            b.no_vig_odds,
+            b.expected_value,
+            b.point_value,
+            b.bet_type,
+            b.status,
+            b.notes,
+            b.logged_at,
+            e.event_id,
+            e.home_team,
+            e.away_team,
+            e.commence_time,
+            s.sport_title,
+            m.market_name,
+            b.team_name
+        FROM bets b
+        JOIN events e ON b.event_id = e.id
+        JOIN sports s ON e.sport_id = s.id
+        JOIN markets m ON b.market_id = m.id
+        WHERE 1=1
+        """
+        
+        params = []
+        param_count = 0
+        
+        if status_filter and status_filter != 'all':
+            param_count += 1
+            base_query += f" AND b.status = ${param_count}"
+            params.append(status_filter)
+        
+        if search_term:
+            param_count += 1
+            base_query += f" AND (e.home_team ILIKE ${param_count} OR e.away_team ILIKE ${param_count} OR b.team_name ILIKE ${param_count})"
+            params.append(f"%{search_term}%")
+        
+        base_query += " ORDER BY b.logged_at DESC"
+        
+        param_count += 1
+        base_query += f" LIMIT ${param_count}"
+        params.append(limit)
+        
+        param_count += 1
+        base_query += f" OFFSET ${param_count}"
+        params.append(offset)
+        
+        return await self.execute_query(base_query, *params)
+
+    async def update_bet_status(self, bet_id: uuid.UUID, status: str, notes: Optional[str] = None) -> bool:
+        """Update the status of a bet"""
+        query = """
+        UPDATE bets 
+        SET status = $2, notes = COALESCE($3, notes), updated_at = CURRENT_TIMESTAMP
+        WHERE id = $1
+        RETURNING id
+        """
+        result = await self.fetch_one(query, bet_id, status, notes)
+        return result is not None
+
+    async def get_bet_by_id(self, bet_id: uuid.UUID) -> Optional[Dict[str, Any]]:
+        """Get a specific bet by ID"""
+        query = """
+        SELECT 
+            b.id,
+            b.odds_value,
+            b.stake,
+            b.no_vig_odds,
+            b.expected_value,
+            b.point_value,
+            b.bet_type,
+            b.status,
+            b.notes,
+            b.logged_at,
+            e.event_id,
+            e.home_team,
+            e.away_team,
+            e.commence_time,
+            s.sport_title,
+            m.market_name,
+            b.team_name
+        FROM bets b
+        JOIN events e ON b.event_id = e.id
+        JOIN sports s ON e.sport_id = s.id
+        JOIN markets m ON b.market_id = m.id
+        WHERE b.id = $1
+        """
+        return await self.fetch_one(query, bet_id)
+
+    async def delete_bet(self, bet_id: uuid.UUID) -> bool:
+        """Delete a bet by ID"""
+        query = """
+        DELETE FROM bets 
+        WHERE id = $1
+        RETURNING id
+        """
+        result = await self.fetch_one(query, bet_id)
+        return result is not None
+
 # Global database manager instance - will be initialized when needed
 db_manager = None
 

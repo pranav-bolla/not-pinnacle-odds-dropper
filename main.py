@@ -634,12 +634,79 @@ class PinnacleOddsScraper:
         logger.info(f"Saved {len(changes)} odds changes to {filepath}")
         return filepath
     
+    async def cleanup_old_events(self, current_odds: List['OddsData']) -> None:
+        """Remove events from database that are no longer being scraped (started/finished)"""
+        try:
+            # Get all current event IDs from the scrape
+            current_event_ids = set()
+            for odds_data in current_odds:
+                if hasattr(odds_data, 'event_id'):
+                    current_event_ids.add(odds_data.event_id)
+            
+            # Get all events in database
+            db_manager = get_db_manager()
+            all_db_events = await db_manager.execute_query(
+                "SELECT event_id FROM events"
+            )
+            
+            # Find events in database that are not in current scrape
+            db_event_ids = {event['event_id'] for event in all_db_events}
+            events_to_remove = db_event_ids - current_event_ids
+            
+            if events_to_remove:
+                logger.info(f"Found {len(events_to_remove)} events to remove (no longer being scraped)")
+                
+                # Remove these events and all related data
+                for event_id in events_to_remove:
+                    # Get internal event ID
+                    event_record = await db_manager.fetch_one(
+                        "SELECT id FROM events WHERE event_id = $1", 
+                        event_id
+                    )
+                    
+                    if event_record:
+                        internal_event_id = event_record['id']
+                        
+                        # Delete related data (cascading deletes will handle most of this)
+                        # But let's be explicit about what we're removing
+                        await db_manager.execute_command(
+                            "DELETE FROM odds_changes WHERE event_id = $1",
+                            internal_event_id
+                        )
+                        
+                        await db_manager.execute_command(
+                            "DELETE FROM price_history WHERE event_id = $1",
+                            internal_event_id
+                        )
+                        
+                        await db_manager.execute_command(
+                            "DELETE FROM odds WHERE event_id = $1",
+                            internal_event_id
+                        )
+                        
+                        await db_manager.execute_command(
+                            "DELETE FROM events WHERE id = $1",
+                            internal_event_id
+                        )
+                        
+                        logger.debug(f"Removed event {event_id} and all related data")
+                
+                logger.info(f"Successfully removed {len(events_to_remove)} old events from database")
+            else:
+                logger.debug("No old events to remove")
+                
+        except Exception as e:
+            logger.error(f"Error during event cleanup: {e}")
+
     async def run_scraping_session(self, compare_with_previous: bool = True) -> Dict:
         """Run a complete scraping session"""
         logger.info("Starting Pinnacle odds scraping session")
         
         # Scrape current odds
         current_odds = await self.scrape_all_sports()
+        
+        # Clean up events that are no longer being scraped (started/finished)
+        await self.cleanup_old_events(current_odds)
         
         result = {
             'current_odds_count': len(current_odds),

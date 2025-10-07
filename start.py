@@ -87,18 +87,19 @@ def run_migrations():
 def start_backend():
     """Start the FastAPI backend server"""
     print("🚀 Starting backend server...")
+    port = os.environ.get('PORT', '8000')
     return subprocess.Popen([
         sys.executable, '-m', 'uvicorn', 
         'backend.main:app', 
         '--host', '0.0.0.0', 
-        '--port', '8000',
+        '--port', port,
         '--reload'
     ])
 
 def start_scraper():
-    """Start the odds scraper"""
-    print("🔄 Starting odds scraper...")
-    return subprocess.Popen([sys.executable, 'main.py'])
+    """Start the odds scraper scheduler"""
+    print("🔄 Starting odds scraper scheduler...")
+    return subprocess.Popen([sys.executable, 'scheduler.py'])
 
 def main():
     """Main startup function"""
@@ -135,7 +136,7 @@ def main():
     print("=" * 50)
     print("🌐 Web Interface: http://localhost:8000")
     print("📊 API Documentation: http://localhost:8000/docs")
-    print("🔄 Scraper: Running in background")
+    print("🔄 Scraper Scheduler: Running every 5 minutes")
     print("\nPress Ctrl+C to stop all services")
     
     def signal_handler(sig, frame):
@@ -163,7 +164,7 @@ def main():
                 break
             
             if scraper_process.poll() is not None:
-                print("❌ Scraper stopped unexpectedly")
+                print("❌ Scraper scheduler stopped unexpectedly")
                 break
                 
     except KeyboardInterrupt:

@@ -13,7 +13,6 @@ class PinnacleOddsApp {
         this.countdownInterval = null;
         this.priceChart = null;
         this.currentTab = 'odds';
-        this.currentView = 'grid';
         this.settings = {
             changeThreshold: 5,
             autoRefresh: 30,
@@ -45,13 +44,6 @@ class PinnacleOddsApp {
             });
         });
 
-        // View toggle
-        document.querySelectorAll('.view-toggle').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                const view = e.currentTarget.dataset.view;
-                this.switchView(view);
-            });
-        });
 
 
         // Filters
@@ -116,10 +108,51 @@ class PinnacleOddsApp {
             this.closePriceHistoryPane();
         });
 
-        // Search
-        document.getElementById('history-event-search').addEventListener('input', (e) => {
-            this.filterHistory(e.target.value);
+        // Bet logging
+        document.getElementById('log-bet-btn').addEventListener('click', () => {
+            console.log('Plus button clicked!', this.currentPriceHistoryChange);
+            if (this.currentPriceHistoryChange) {
+                this.showBetModal(this.currentPriceHistoryChange);
+            } else {
+                console.log('No current price history change available');
+                alert('Please click on a drop first to view price history');
+            }
         });
+
+        // Bet modal
+        document.getElementById('close-bet-modal').addEventListener('click', () => {
+            this.closeBetModal();
+        });
+
+        document.getElementById('cancel-bet').addEventListener('click', () => {
+            this.closeBetModal();
+        });
+
+        document.getElementById('log-bet').addEventListener('click', () => {
+            this.logBet();
+        });
+
+        // Bet form inputs
+        document.getElementById('bet-odds').addEventListener('input', () => {
+            this.calculateBetEV();
+        });
+
+        // Delete modal event listeners
+        document.getElementById('close-delete-modal').addEventListener('click', () => {
+            this.closeDeleteModal();
+        });
+
+        document.getElementById('cancel-delete').addEventListener('click', () => {
+            this.closeDeleteModal();
+        });
+
+        document.getElementById('confirm-delete').addEventListener('click', () => {
+            if (this.betToDelete) {
+                this.deleteBet(this.betToDelete);
+                this.closeDeleteModal();
+            }
+        });
+
     }
 
     connectWebSocket() {
@@ -248,7 +281,8 @@ class PinnacleOddsApp {
                 this.loadSports(),
                 this.loadMarkets(),
                 this.loadOdds(),
-                this.loadStats()
+                this.loadStats(),
+                this.loadDrops()
             ]);
         } catch (error) {
             console.error('Error loading initial data:', error);
@@ -354,7 +388,7 @@ class PinnacleOddsApp {
             
             document.getElementById('live-events').textContent = data.total_events;
             document.getElementById('changes-24h').textContent = data.recent_changes_24h;
-            document.getElementById('flagged-count').textContent = data.flagged_changes;
+            document.getElementById('placed-count').textContent = data.flagged_changes;
         } catch (error) {
             console.error('Error loading stats:', error);
         }
@@ -972,23 +1006,12 @@ class PinnacleOddsApp {
             case 'drops':
                 this.loadDrops();
                 break;
-            case 'history':
-                this.loadHistory();
+            case 'bets':
+                this.loadBets();
                 break;
         }
     }
 
-    switchView(view) {
-        document.querySelectorAll('.view-toggle').forEach(toggle => {
-            toggle.classList.remove('active');
-        });
-        document.querySelector(`[data-view="${view}"]`).classList.add('active');
-
-        const container = document.getElementById('odds-container');
-        container.className = `odds-container ${view}-view`;
-
-        this.currentView = view;
-    }
 
     startAutoRefresh() {
         if (this.autoRefreshInterval) {
@@ -1236,6 +1259,9 @@ class PinnacleOddsApp {
 
     async showPriceHistory(change) {
         try {
+            // Store current change for bet logging
+            this.currentPriceHistoryChange = change;
+            
             // Fetch price history
             const response = await fetch(`/api/price-history/${change.event_id}?market_id=${change.market_id}&team_name=${encodeURIComponent(change.team_name)}&hours=24`);
             const data = await response.json();
@@ -1336,15 +1362,11 @@ class PinnacleOddsApp {
                         display: true,
                         position: 'left',
                         ticks: {
-                            color: '#00ff88'
+                            color: '#ffffff',
+                            maxTicksLimit: 4
                         },
                         grid: {
-                            color: 'rgba(0, 255, 136, 0.1)'
-                        },
-                        title: {
-                            display: true,
-                            text: 'Price (Odds)',
-                            color: '#00ff88'
+                            color: 'rgba(255, 255, 255, 0.1)'
                         }
                     },
                     y1: {
@@ -1352,15 +1374,11 @@ class PinnacleOddsApp {
                         display: true,
                         position: 'right',
                         ticks: {
-                            color: '#ffaa00'
+                            color: '#ffffff',
+                            maxTicksLimit: 4
                         },
                         grid: {
                             drawOnChartArea: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Limit ($)',
-                            color: '#ffaa00'
                         }
                     }
                 }
@@ -1399,6 +1417,305 @@ class PinnacleOddsApp {
             this.priceChart.destroy();
             this.priceChart = null;
         }
+    }
+
+    // Bet logging functionality
+    showBetModal(change) {
+        // Populate bet info
+        document.getElementById('bet-match').textContent = `${change.home_team} vs ${change.away_team}`;
+        
+        // Create bet selection with point value if applicable
+        let betSelection = change.team_name;
+        if (change.point_value !== null && change.point_value !== undefined) {
+            betSelection = `${change.team_name} ${change.point_value}`;
+        }
+        document.getElementById('bet-selection').textContent = betSelection;
+        
+        // Don't auto-fill odds - let user enter manually
+        document.getElementById('bet-odds').value = '';
+        
+        // Reset EV box to default styling
+        const evInput = document.getElementById('bet-ev');
+        evInput.style.backgroundColor = '';
+        evInput.style.borderColor = '';
+        evInput.value = '';
+        
+        // Calculate and store the no-vig odds from the original drop data
+        this.calculateOriginalNoVigOdds(change);
+        
+        // Show modal
+        document.getElementById('bet-modal').style.display = 'block';
+        
+        // Store current change for bet logging
+        this.currentBetChange = change;
+    }
+
+    calculateOriginalNoVigOdds(change) {
+        // Calculate no-vig odds from the original drop data (not user input)
+        let noVigOdds;
+        if (change.market_key === 'h2h' && typeof change.other_side_odds === 'string' && change.other_side_odds.includes(',')) {
+            // Soccer three-way moneyline
+            const allOdds = change.other_side_odds.split(',').map(odds => parseFloat(odds));
+            noVigOdds = this.calculateThreeWayNoVigPrice(change.new_odds, allOdds);
+        } else if (typeof change.other_side_odds === 'string' && !change.other_side_odds.includes(',')) {
+            // Two-way market with string odds
+            const otherOdds = parseFloat(change.other_side_odds);
+            noVigOdds = this.calculateNoVigPrice(change.new_odds, otherOdds);
+        } else if (typeof change.other_side_odds === 'number') {
+            // Two-way market with number odds
+            noVigOdds = this.calculateNoVigPrice(change.new_odds, change.other_side_odds);
+        } else {
+            noVigOdds = change.new_odds; // Fallback
+        }
+        
+        // Store the original no-vig odds for EV calculation
+        this.originalNoVigOdds = noVigOdds;
+    }
+
+    calculateBetEV() {
+        const odds = parseFloat(document.getElementById('bet-odds').value);
+        
+        if (!odds || !this.currentBetChange || !this.originalNoVigOdds) return;
+        
+        // Use the stored original no-vig odds (not recalculated from user input)
+        const noVigOdds = this.originalNoVigOdds;
+        
+        // Convert American odds to decimal format
+        const oddsDecimal = odds > 0 ? (odds / 100) + 1 : (100 / Math.abs(odds)) + 1;
+        const noVigDecimal = noVigOdds > 0 ? (noVigOdds / 100) + 1 : (100 / Math.abs(noVigOdds)) + 1;
+        
+        // Find the fair probability by taking 1 divided by the no-vig decimal odds
+        const fairProbability = 1 / noVigDecimal;
+        
+        // EV% = (sportsbook odds × fair probability – 1) × 100
+        const evPercentage = (oddsDecimal * fairProbability - 1) * 100;
+        
+        // Update EV field with percentage
+        document.getElementById('bet-ev').value = evPercentage.toFixed(2);
+        
+        // Update EV box styling based on positive/negative
+        const evInput = document.getElementById('bet-ev');
+        if (evPercentage > 0) {
+            evInput.style.backgroundColor = 'rgba(0, 255, 136, 0.15)'; // Subtle green for positive
+            evInput.style.borderColor = 'rgba(0, 255, 136, 0.4)';
+            evInput.style.color = '#00ff88';
+        } else if (evPercentage < 0) {
+            evInput.style.backgroundColor = 'rgba(255, 85, 85, 0.15)'; // Subtle red for negative
+            evInput.style.borderColor = 'rgba(255, 85, 85, 0.4)';
+            evInput.style.color = '#ff5555';
+        } else {
+            // Reset to default styling for zero
+            evInput.style.backgroundColor = '';
+            evInput.style.borderColor = '';
+            evInput.style.color = '';
+        }
+    }
+
+    async logBet() {
+        const odds = parseFloat(document.getElementById('bet-odds').value);
+        const stake = parseFloat(document.getElementById('bet-stake').value);
+        
+        if (!odds || !stake || !this.currentBetChange) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        try {
+            // Calculate no-vig odds
+            let noVigOdds;
+            if (this.currentBetChange.market_key === 'h2h' && typeof this.currentBetChange.other_side_odds === 'string' && this.currentBetChange.other_side_odds.includes(',')) {
+                const allOdds = this.currentBetChange.other_side_odds.split(',').map(odds => parseFloat(odds));
+                noVigOdds = this.calculateThreeWayNoVigPrice(odds, allOdds);
+            } else if (typeof this.currentBetChange.other_side_odds === 'string' && !this.currentBetChange.other_side_odds.includes(',')) {
+                const otherOdds = parseFloat(this.currentBetChange.other_side_odds);
+                noVigOdds = this.calculateNoVigPrice(odds, otherOdds);
+            } else if (typeof this.currentBetChange.other_side_odds === 'number') {
+                noVigOdds = this.calculateNoVigPrice(odds, this.currentBetChange.other_side_odds);
+            } else {
+                noVigOdds = odds;
+            }
+            
+            const evPercentage = parseFloat(document.getElementById('bet-ev').value);
+            
+            const betData = {
+                event_id: this.currentBetChange.event_id,
+                market_id: this.currentBetChange.market_id,
+                team_name: this.currentBetChange.team_name,
+                odds_value: odds,
+                stake: stake,
+                no_vig_odds: noVigOdds,
+                expected_value: evPercentage, // This is now percentage, not dollar amount
+                point_value: this.currentBetChange.point_value,
+                bet_type: this.currentBetChange.market_key
+            };
+            
+            // Send to backend API
+            const response = await fetch('/api/bets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(betData)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            console.log('Bet logged successfully:', result);
+            
+            // Close modal and refresh bets
+            this.closeBetModal();
+            await this.loadBets();
+            
+        } catch (error) {
+            console.error('Error logging bet:', error);
+            // Could add a toast notification here instead of alert
+        }
+    }
+
+    closeBetModal() {
+        document.getElementById('bet-modal').style.display = 'none';
+        this.currentBetChange = null;
+        
+        // Clear form
+        document.getElementById('bet-odds').value = '';
+        document.getElementById('bet-stake').value = '';
+        document.getElementById('bet-ev').value = '';
+    }
+
+    async loadBets() {
+        try {
+            const response = await fetch('/api/bets');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            this.displayBets(data.bets);
+            
+            // Update placed count in header
+            const placedCountElement = document.getElementById('placed-count');
+            if (placedCountElement) {
+                placedCountElement.textContent = data.bets.length;
+            }
+        } catch (error) {
+            console.error('Error loading bets:', error);
+            // Show empty state or error message
+            this.displayBets([]);
+            
+            // Update placed count to 0 on error
+            const placedCountElement = document.getElementById('placed-count');
+            if (placedCountElement) {
+                placedCountElement.textContent = '0';
+            }
+        }
+    }
+
+    displayBets(bets) {
+        const container = document.getElementById('bets-container');
+        
+        if (!bets || bets.length === 0) {
+            container.innerHTML = '<div class="no-bets">No bets logged yet.</div>';
+            return;
+        }
+        
+        const betsHtml = bets.map(bet => {
+            const loggedDate = new Date(bet.logged_at);
+            const dateStr = loggedDate.toLocaleDateString();
+            const timeStr = loggedDate.toLocaleTimeString();
+            
+            // Create bet selection text with point value if applicable
+            let betSelection = bet.team_name;
+            if (bet.point_value !== null && bet.point_value !== undefined) {
+                betSelection = `${bet.team_name} ${bet.point_value}`;
+            }
+            
+            return `
+                <div class="bet-card" data-bet-id="${bet.id}">
+                    <div class="bet-delete-btn" data-bet-id="${bet.id}" title="Delete bet">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <div class="bet-header">
+                        <div class="bet-match-info">
+                            <span class="bet-match">${bet.home_team} vs ${bet.away_team}</span>
+                            <span class="bet-sport">${bet.sport_title}</span>
+                            <span class="bet-market">${bet.market_name}</span>
+                        </div>
+                        <div class="bet-date">${dateStr} ${timeStr}</div>
+                    </div>
+                    <div class="bet-details">
+                        <div class="bet-selection">${betSelection}</div>
+                        <div class="bet-odds">${this.formatOdds(bet.odds_value)}</div>
+                        <div class="bet-stake">$${bet.stake.toFixed(2)}</div>
+                        <div class="bet-ev ${bet.expected_value >= 0 ? 'positive' : 'negative'}">
+                            ${bet.expected_value >= 0 ? '+' : ''}${bet.expected_value.toFixed(2)}%
+                        </div>
+                        ${bet.status !== 'pending' ? `<div class="bet-status status-${bet.status}">${bet.status}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        container.innerHTML = betsHtml;
+        
+        // Add event listeners for delete buttons
+        container.querySelectorAll('.bet-delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const betId = btn.getAttribute('data-bet-id');
+                this.showDeleteModal(betId);
+            });
+        });
+    }
+
+    filterBets(searchTerm) {
+        // TODO: Implement bet filtering
+        console.log('Filtering bets:', searchTerm);
+    }
+
+    filterBetsByStatus(status) {
+        // TODO: Implement bet status filtering
+        console.log('Filtering bets by status:', status);
+    }
+
+    showDeleteModal(betId) {
+        // Store the bet ID for deletion
+        this.betToDelete = betId;
+        
+        // Show the delete modal
+        document.getElementById('delete-modal').style.display = 'block';
+    }
+
+    async deleteBet(betId) {
+        try {
+            const response = await fetch(`/api/bets/${betId}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // Remove the bet card from the UI immediately
+            const betCard = document.querySelector(`[data-bet-id="${betId}"]`);
+            if (betCard) {
+                betCard.remove();
+            }
+
+            // Refresh the bets list to ensure consistency
+            await this.loadBets();
+
+        } catch (error) {
+            console.error('Error deleting bet:', error);
+            // Could add a toast notification here
+        }
+    }
+
+    closeDeleteModal() {
+        document.getElementById('delete-modal').style.display = 'none';
+        this.betToDelete = null;
     }
 }
 

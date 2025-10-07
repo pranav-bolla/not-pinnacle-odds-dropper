@@ -282,3 +282,27 @@ INSERT INTO markets (market_key, market_name, market_category) VALUES
 ('spreads_h2', '2nd Half Spread', 'alternate'),
 ('totals_h1', '1st Half Total', 'alternate'),
 ('totals_h2', '2nd Half Total', 'alternate');
+
+-- Bets table - for logging user bets
+CREATE TABLE bets (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    event_id UUID REFERENCES events(id) ON DELETE CASCADE,
+    market_id UUID REFERENCES markets(id) ON DELETE CASCADE,
+    team_name VARCHAR(255) NOT NULL,
+    odds_value DECIMAL(10,3) NOT NULL,
+    stake DECIMAL(10,2) NOT NULL,
+    no_vig_odds DECIMAL(10,3) NOT NULL,
+    expected_value DECIMAL(10,4) NOT NULL,
+    point_value DECIMAL(10,2),
+    bet_type VARCHAR(50) NOT NULL, -- 'moneyline', 'spread', 'total'
+    status VARCHAR(20) DEFAULT 'pending', -- 'pending', 'won', 'lost', 'push'
+    notes TEXT,
+    logged_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Indexes for bets table
+CREATE INDEX idx_bets_event_id ON bets(event_id);
+CREATE INDEX idx_bets_logged_at ON bets(logged_at DESC);
+CREATE INDEX idx_bets_status ON bets(status);

@@ -19,7 +19,7 @@
                 <div class="logo">
                     <i class="fas fa-chart-line"></i>
                     <span>Not POD</span>
-                    <span class="logo-subtitle">Not Pinnacle Odds Drop Tracker</span>
+                    <span class="logo-subtitle">Not Pinnacle Odds Dropper</span>
                 </div>
                 <div class="header-stats">
                     <div class="stat-item">
@@ -31,8 +31,8 @@
                         <span class="stat-value" id="changes-24h">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Flagged</span>
-                        <span class="stat-value flagged" id="flagged-count">0</span>
+                        <span class="stat-label">Placed</span>
+                        <span class="stat-value" id="placed-count">0</span>
                     </div>
                     <div class="stat-item countdown-timer">
                         <span class="stat-label">Next Scrape</span>
@@ -52,16 +52,16 @@
         <nav class="nav-tabs">
             <button class="nav-tab active" data-tab="odds">
                 <i class="fas fa-chart-bar"></i>
-                Live Odds
+                Odds
             </button>
             <button class="nav-tab" data-tab="drops">
                 <i class="fas fa-arrow-down"></i>
                 Drops
                 <span class="tab-badge" id="drops-badge">0</span>
             </button>
-            <button class="nav-tab" data-tab="history">
-                <i class="fas fa-history"></i>
-                History
+            <button class="nav-tab" data-tab="bets">
+                <i class="fas fa-chart-bar"></i>
+                Bets
             </button>
             <button class="nav-tab" data-tab="settings">
                 <i class="fas fa-cog"></i>
@@ -81,14 +81,6 @@
                         <select id="market-filter" class="filter-select">
                             <option value="">All Markets</option>
                         </select>
-                    </div>
-                    <div class="view-controls">
-                        <button class="view-toggle active" data-view="grid">
-                            <i class="fas fa-th"></i>
-                        </button>
-                        <button class="view-toggle" data-view="list">
-                            <i class="fas fa-list"></i>
-                        </button>
                     </div>
                 </div>
 
@@ -116,17 +108,13 @@
                 </div>
             </div>
 
-            <!-- History Tab -->
-            <div class="tab-content" id="history-tab">
-                <div class="history-header">
-                    <h2>Odds History</h2>
-                    <div class="history-controls">
-                        <input type="text" id="history-event-search" placeholder="Search events..." class="search-input">
-                    </div>
+            <!-- Bets Tab -->
+            <div class="tab-content" id="bets-tab">
+                <div class="bets-header">
+                    <h2>Logged Bets</h2>
                 </div>
-
-                <div class="history-container" id="history-container">
-                    <!-- History will be populated here -->
+                <div class="bets-container" id="bets-container">
+                    <!-- Bets will be populated here -->
                 </div>
             </div>
 
@@ -199,9 +187,14 @@
         <div id="price-history-pane" class="price-history-pane">
             <div class="pane-header">
                 <h3 id="pane-title">Price History</h3>
-                <button id="close-pane" class="close-btn">
-                    <i class="fas fa-times"></i>
-                </button>
+                <div class="pane-actions">
+                    <button id="log-bet-btn" class="log-bet-btn" title="Log Bet">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button id="close-pane" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
             <div class="pane-content">
                 <div id="price-chart-container" class="chart-container">
@@ -249,6 +242,67 @@
             </div>
         </div>
     </div>
+
+        <!-- Bet Logging Modal -->
+        <div id="bet-modal" class="bet-modal">
+            <div class="bet-modal-content">
+                <div class="bet-modal-header">
+                    <h3>Log Bet</h3>
+                    <button id="close-bet-modal" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="bet-modal-body">
+                    <div class="bet-info">
+                        <div class="bet-field">
+                            <label>Match:</label>
+                            <span id="bet-match">-</span>
+                        </div>
+                        <div class="bet-field">
+                            <label>Bet:</label>
+                            <span id="bet-selection">-</span>
+                        </div>
+                    </div>
+                    <div class="bet-inputs">
+                        <div class="input-group">
+                            <label for="bet-odds">Odds:</label>
+                            <input type="number" id="bet-odds" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="bet-stake">Stake ($):</label>
+                            <input type="number" id="bet-stake" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="bet-ev">EV (%):</label>
+                            <input type="number" id="bet-ev" step="0.01" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="bet-modal-footer">
+                    <button id="cancel-bet" class="btn btn-secondary">Cancel</button>
+                    <button id="log-bet" class="btn btn-primary">Log Bet</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div id="delete-modal" class="bet-modal">
+            <div class="bet-modal-content">
+                <div class="bet-modal-header">
+                    <h3>Delete Bet</h3>
+                    <button id="close-delete-modal" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="bet-modal-body">
+                    <p>Are you sure?</p>
+                </div>
+                <div class="bet-modal-footer">
+                    <button id="cancel-delete" class="btn btn-secondary">Cancel</button>
+                    <button id="confirm-delete" class="btn btn-danger">Delete Bet</button>
+                </div>
+            </div>
+        </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/app.js"></script>

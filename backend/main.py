@@ -7,6 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Quer
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
 import asyncio
 import json
@@ -24,6 +25,23 @@ load_dotenv()
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Pydantic models for bet operations
+class BetCreateRequest(BaseModel):
+    event_id: str
+    market_id: str
+    team_name: str
+    odds_value: float
+    stake: float
+    no_vig_odds: float
+    expected_value: float
+    point_value: Optional[float] = None
+    bet_type: str = 'moneyline'
+    notes: Optional[str] = None
+
+class BetUpdateRequest(BaseModel):
+    status: str
+    notes: Optional[str] = None
 
 # WebSocket connection manager
 class ConnectionManager:
@@ -255,6 +273,113 @@ async def get_stats():
     except Exception as e:
         logger.error(f"Error fetching stats: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch stats")
+
+# Bet management endpoints
+
+@app.post("/api/bets")
+async def create_bet(bet_request: BetCreateRequest):
+    """Create a new bet"""
+    try:
+        # Get the internal event ID from the API event ID
+        event_record = await get_db_manager().fetch_one(
+            "SELECT id FROM events WHERE event_id = $1", 
+            bet_request.event_id
+        )
+        if not event_record:
+            raise HTTPException(status_code=404, detail="Event not found")
+        
+        # Convert market_id to UUID
+        market_uuid = uuid.UUID(bet_request.market_id)
+        
+        # Insert the bet
+        bet_id = await get_db_manager().insert_bet(
+            event_id=event_record['id'],  # Use internal UUID
+            market_id=market_uuid,
+            team_name=bet_request.team_name,
+            odds_value=bet_request.odds_value,
+            stake=bet_request.stake,
+            no_vig_odds=bet_request.no_vig_odds,
+            expected_value=bet_request.expected_value,
+            point_value=bet_request.point_value,
+            bet_type=bet_request.bet_type,
+            notes=bet_request.notes
+        )
+        
+        return {"message": "Bet created successfully", "bet_id": str(bet_id)}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Invalid ID format: {e}")
+    except Exception as e:
+        logger.error(f"Error creating bet: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create bet")
+
+@app.get("/api/bets")
+async def get_bets(
+    limit: int = Query(100, description="Maximum number of results"),
+    offset: int = Query(0, description="Number of results to skip"),
+    status: Optional[str] = Query(None, description="Filter by status"),
+    search: Optional[str] = Query(None, description="Search term for teams/matches")
+):
+    """Get all logged bets with optional filtering"""
+    try:
+        bets = await get_db_manager().get_bets(
+            limit=limit,
+            offset=offset,
+            status_filter=status,
+            search_term=search
+        )
+        return {"bets": bets, "count": len(bets)}
+    except Exception as e:
+        logger.error(f"Error fetching bets: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch bets")
+
+@app.get("/api/bets/{bet_id}")
+async def get_bet(bet_id: str):
+    """Get a specific bet by ID"""
+    try:
+        bet_uuid = uuid.UUID(bet_id)
+        bet = await get_db_manager().get_bet_by_id(bet_uuid)
+        if not bet:
+            raise HTTPException(status_code=404, detail="Bet not found")
+        return {"bet": bet}
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid bet ID format")
+    except Exception as e:
+        logger.error(f"Error fetching bet: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch bet")
+
+@app.put("/api/bets/{bet_id}")
+async def update_bet(bet_id: str, update_request: BetUpdateRequest):
+    """Update a bet's status and notes"""
+    try:
+        bet_uuid = uuid.UUID(bet_id)
+        success = await get_db_manager().update_bet_status(
+            bet_id=bet_uuid,
+            status=update_request.status,
+            notes=update_request.notes
+        )
+        if not success:
+            raise HTTPException(status_code=404, detail="Bet not found")
+        return {"message": "Bet updated successfully"}
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid bet ID format")
+    except Exception as e:
+        logger.error(f"Error updating bet: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update bet")
+
+@app.delete("/api/bets/{bet_id}")
+async def delete_bet(bet_id: str):
+    """Delete a bet"""
+    try:
+        bet_uuid = uuid.UUID(bet_id)
+        success = await get_db_manager().delete_bet(bet_uuid)
+        if not success:
+            raise HTTPException(status_code=404, detail="Bet not found")
+        return {"message": "Bet deleted successfully"}
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid bet ID format")
+    except Exception as e:
+        logger.error(f"Error deleting bet: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete bet")
 
 # WebSocket endpoint for real-time updates
 @app.websocket("/ws")

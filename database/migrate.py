@@ -25,10 +25,23 @@ async def run_migration():
         # Connect to database
         conn = await asyncpg.connect(database_url)
         
-        # Execute schema
-        await conn.execute(schema_sql)
+        # Check if tables already exist
+        result = await conn.fetch("""
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_schema = 'public' 
+            AND table_name IN ('sports', 'events', 'markets', 'odds', 'odds_changes', 'price_history', 'bets')
+        """)
         
-        logger.info("Database migration completed successfully")
+        existing_tables = [row['table_name'] for row in result]
+        
+        if existing_tables:
+            logger.info(f"Tables already exist: {', '.join(existing_tables)}")
+            logger.info("Skipping migration - database is already set up")
+        else:
+            # Execute schema only if tables don't exist
+            await conn.execute(schema_sql)
+            logger.info("Database migration completed successfully")
         
     except Exception as e:
         logger.error(f"Migration failed: {e}")
