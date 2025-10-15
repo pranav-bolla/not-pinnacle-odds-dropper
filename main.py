@@ -16,6 +16,7 @@ import uuid
 import logging
 from dataclasses import dataclass
 from database.connection import get_db_manager
+from email_service import email_service
 
 # Configure logging
 logging.basicConfig(
@@ -617,6 +618,34 @@ class PinnacleOddsScraper:
                     if change_id:
                         stored_count += 1
                         logger.info(f"✅ Stored drop in database: {change['game']} | {change['team_name']} | {change['change_percentage']:.2f}%")
+                        
+                        # Send email notification for the drop
+                        try:
+                            # Prepare drop data for email
+                            email_drop_data = {
+                                'sport_title': change['sport'],
+                                'home_team': change['game'].split(' vs ')[0] if ' vs ' in change['game'] else 'Unknown',
+                                'away_team': change['game'].split(' vs ')[1] if ' vs ' in change['game'] else 'Unknown',
+                                'team_name': change['team_name'],
+                                'market_name': change['market_type'].title(),
+                                'market_key': change['market_type'],
+                                'old_odds': change['old_odds'],
+                                'new_odds': change['new_odds'],
+                                'current_odds': change['new_odds'],  # Will be updated by database query
+                                'change_percentage': change['change_percentage'],
+                                'point_value': change.get('point'),
+                                'detected_at': change['detected_at']
+                            }
+                            
+                            # Send email notification
+                            email_sent = email_service.send_drop_alert(email_drop_data)
+                            if email_sent:
+                                logger.info(f"📧 Email notification sent for drop: {change['game']}")
+                            else:
+                                logger.warning(f"📧 Failed to send email notification for drop: {change['game']}")
+                                
+                        except Exception as email_error:
+                            logger.error(f"❌ Error sending email notification: {email_error}")
                     else:
                         logger.error(f"❌ Failed to store drop in database: {change['game']}")
                 else:

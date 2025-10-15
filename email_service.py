@@ -1,0 +1,230 @@
+#!/usr/bin/env python3
+"""
+Email Service for Odds Drop Notifications
+Sends email alerts when significant odds drops are detected
+"""
+
+import smtplib
+import logging
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from datetime import datetime
+import os
+from typing import Dict, List, Any
+
+logger = logging.getLogger(__name__)
+
+class EmailService:
+    """Service for sending email notifications"""
+    
+    def __init__(self):
+        self.smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
+        self.smtp_port = int(os.getenv('SMTP_PORT', '587'))
+        self.sender_email = os.getenv('SENDER_EMAIL')
+        self.sender_password = os.getenv('SENDER_PASSWORD')
+        self.recipient_email = os.getenv('RECIPIENT_EMAIL')
+        
+        if not all([self.sender_email, self.sender_password, self.recipient_email]):
+            logger.warning("Email configuration incomplete. Email notifications will be disabled.")
+            self.enabled = False
+        else:
+            self.enabled = True
+            logger.info(f"Email service initialized. Sending to: {self.recipient_email}")
+    
+    def format_odds(self, odds: float) -> str:
+        """Format odds for display"""
+        if odds > 0:
+            return f"+{int(odds)}"
+        else:
+            return str(int(odds))
+    
+    def format_drop_email(self, drop_data: Dict[str, Any]) -> str:
+        """Format drop data into HTML email content"""
+        # Extract data
+        sport = drop_data.get('sport_title', 'Unknown Sport')
+        home_team = drop_data.get('home_team', 'Unknown')
+        away_team = drop_data.get('away_team', 'Unknown')
+        team_name = drop_data.get('team_name', 'Unknown')
+        market_name = drop_data.get('market_name', 'Unknown')
+        old_odds = drop_data.get('old_odds', 0)
+        new_odds = drop_data.get('new_odds', 0)
+        current_odds = drop_data.get('current_odds', new_odds)
+        change_percentage = drop_data.get('change_percentage', 0)
+        point_value = drop_data.get('point_value')
+        detected_at = drop_data.get('detected_at', datetime.now().isoformat())
+        
+        # Format outcome text
+        outcome_text = team_name
+        if point_value is not None:
+            if drop_data.get('market_key') == 'totals':
+                outcome_text = f"{team_name} {point_value}"
+            elif drop_data.get('market_key') == 'spreads':
+                sign = '+' if point_value > 0 else ''
+                outcome_text = f"{team_name} {sign}{point_value}"
+        
+        # Format time
+        try:
+            dt = datetime.fromisoformat(detected_at.replace('Z', '+00:00'))
+            formatted_time = dt.strftime('%Y-%m-%d %H:%M:%S EST')
+        except:
+            formatted_time = detected_at
+        
+        # Create HTML email
+        html_content = f"""
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 20px; }}
+                .header {{ background-color: #1a1a1a; color: #00ff88; padding: 20px; border-radius: 8px; }}
+                .content {{ background-color: #2a2a2a; color: #ffffff; padding: 20px; border-radius: 8px; margin-top: 10px; }}
+                .odds-change {{ color: #ff5555; font-weight: bold; }}
+                .current-odds {{ color: #00ff88; font-weight: bold; }}
+                .drop-percentage {{ color: #ffaa00; font-weight: bold; }}
+                .game-info {{ font-size: 18px; margin-bottom: 15px; }}
+                .market-info {{ font-size: 16px; margin-bottom: 10px; }}
+                .odds-info {{ font-size: 14px; }}
+                .footer {{ margin-top: 20px; font-size: 12px; color: #888; }}
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h2>🎯 Odds Drop Alert - Not POD</h2>
+            </div>
+            
+            <div class="content">
+                <div class="game-info">
+                    <strong>{sport}:</strong> {home_team} vs {away_team}
+                </div>
+                
+                <div class="market-info">
+                    <strong>Market:</strong> {market_name}<br>
+                    <strong>Selection:</strong> {outcome_text}
+                </div>
+                
+                <div class="odds-info">
+                    <strong>Odds Change:</strong> 
+                    <span class="odds-change">{self.format_odds(old_odds)} → {self.format_odds(new_odds)}</span><br>
+                    
+                    <strong>Current Odds:</strong> 
+                    <span class="current-odds">{self.format_odds(current_odds)}</span><br>
+                    
+                    <strong>Drop Percentage:</strong> 
+                    <span class="drop-percentage">{change_percentage:.1f}%</span><br>
+                    
+                    <strong>Detected:</strong> {formatted_time}
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>This alert was generated by Not POD - Pinnacle Odds Drop Tracker</p>
+                <p>Check the dashboard for more details and to log bets.</p>
+            </div>
+        </body>
+        </html>
+        """
+        
+        return html_content
+    
+    def send_drop_alert(self, drop_data: Dict[str, Any]) -> bool:
+        """Send email alert for a single drop"""
+        if not self.enabled:
+            logger.warning("Email service disabled - skipping email notification")
+            return False
+        
+        try:
+            # Create message
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = f"🎯 Odds Drop: {drop_data.get('home_team', 'Team A')} vs {drop_data.get('away_team', 'Team B')} - {drop_data.get('change_percentage', 0):.1f}%"
+            msg['From'] = self.sender_email
+            msg['To'] = self.recipient_email
+            
+            # Create HTML content
+            html_content = self.format_drop_email(drop_data)
+            html_part = MIMEText(html_content, 'html')
+            msg.attach(html_part)
+            
+            # Send email
+            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+                server.starttls()
+                server.login(self.sender_email, self.sender_password)
+                server.send_message(msg)
+            
+            logger.info(f"✅ Email alert sent for {drop_data.get('home_team')} vs {drop_data.get('away_team')} drop")
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to send email alert: {e}")
+            return False
+    
+    def send_daily_summary(self, drops: List[Dict[str, Any]]) -> bool:
+        """Send daily summary of all drops"""
+        if not self.enabled or not drops:
+            return False
+        
+        try:
+            # Create summary content
+            total_drops = len(drops)
+            avg_drop = sum(drop.get('change_percentage', 0) for drop in drops) / total_drops
+            max_drop = max(drop.get('change_percentage', 0) for drop in drops)
+            
+            # Group by sport
+            sport_counts = {}
+            for drop in drops:
+                sport = drop.get('sport_title', 'Unknown')
+                sport_counts[sport] = sport_counts.get(sport, 0) + 1
+            
+            html_content = f"""
+            <html>
+            <head>
+                <style>
+                    body {{ font-family: Arial, sans-serif; margin: 20px; }}
+                    .header {{ background-color: #1a1a1a; color: #00ff88; padding: 20px; border-radius: 8px; }}
+                    .content {{ background-color: #2a2a2a; color: #ffffff; padding: 20px; border-radius: 8px; margin-top: 10px; }}
+                    .stats {{ font-size: 18px; margin-bottom: 15px; }}
+                    .sport-breakdown {{ font-size: 14px; }}
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h2>📊 Daily Drops Summary - Not POD</h2>
+                </div>
+                
+                <div class="content">
+                    <div class="stats">
+                        <strong>Total Drops Today:</strong> {total_drops}<br>
+                        <strong>Average Drop:</strong> {avg_drop:.1f}%<br>
+                        <strong>Largest Drop:</strong> {max_drop:.1f}%
+                    </div>
+                    
+                    <div class="sport-breakdown">
+                        <strong>Drops by Sport:</strong><br>
+                        {chr(10).join([f"• {sport}: {count} drops" for sport, count in sport_counts.items()])}
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+            
+            # Create and send message
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = f"📊 Daily Summary: {total_drops} Drops Detected"
+            msg['From'] = self.sender_email
+            msg['To'] = self.recipient_email
+            
+            html_part = MIMEText(html_content, 'html')
+            msg.attach(html_part)
+            
+            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+                server.starttls()
+                server.login(self.sender_email, self.sender_password)
+                server.send_message(msg)
+            
+            logger.info(f"✅ Daily summary sent: {total_drops} drops")
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to send daily summary: {e}")
+            return False
+
+# Global email service instance
+email_service = EmailService()

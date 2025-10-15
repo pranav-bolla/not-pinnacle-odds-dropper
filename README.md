@@ -28,7 +28,7 @@ A real-time odds tracking system that monitors Pinnacle odds movements and alert
 - **Flagged Changes**: Mark important changes for review
 
 ### ⏰ Automatic Monitoring
-- **Rescraping Frequency**: Every 5 minutes from 1 PM to 1 AM EST
+- **Rescraping Frequency**: Every 5 minutes from 9 AM to 9 PM EST
 - **Change Detection**: Automatically flags odds drops of 5% or more
 - **Real-time Updates**: WebSocket connections provide instant updates
 - **Historical Tracking**: All odds changes are stored for analysis

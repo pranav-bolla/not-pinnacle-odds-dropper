@@ -1,0 +1,19 @@
+# Email Configuration for Drop Notifications
+# Copy these to your .env file and fill in your details
+
+# SMTP Server Configuration
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+
+# Sender Email (Gmail account that will send the emails)
+# For Gmail, you'll need to use an "App Password" instead of your regular password
+SENDER_EMAIL=your-email@gmail.com
+SENDER_PASSWORD=your-app-password
+
+# Recipient Email (where you want to receive drop notifications)
+RECIPIENT_EMAIL=your-email@gmail.com
+
+# Note: For Gmail, you need to:
+# 1. Enable 2-factor authentication
+# 2. Generate an "App Password" for this application
+# 3. Use the App Password (not your regular password) in SENDER_PASSWORD

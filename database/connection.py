@@ -254,6 +254,13 @@ class DatabaseManager:
             oc.change_type,
             oc.detected_at,
             oc.is_flagged,
+            -- Get the current odds for this specific team (not the old drop odds)
+            (SELECT co.odds_value FROM current_odds co 
+             WHERE co.event_id = oc.event_id 
+             AND co.market_id = oc.market_id 
+             AND co.team_name = oc.team_name
+             AND co.point_value = oc.point_value
+             LIMIT 1) as current_odds,
             -- Get the other sides' current odds for no-vig calculation
             CASE 
                 WHEN m.market_key = 'h2h' AND s.sport_key IN ('soccer_epl', 'soccer_uefa_champs_league', 'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_italy_serie_a', 'soccer_france_ligue_one', 'soccer_efl_champ', 'soccer_uefa_europa_league', 'soccer_uefa_europa_conference_league') THEN

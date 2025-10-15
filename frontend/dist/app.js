@@ -693,22 +693,22 @@ class PinnacleOddsApp {
             outcomeText = `${change.team_name} ${spreadSign}${change.point_value}`;
         }
         
-                // Calculate proper no-vig price
+                // Calculate proper no-vig price using current odds (not the old drop odds)
                 let noVigPriceFormatted = '--';
-                if (change.other_side_odds) {
+                if (change.other_side_odds && change.current_odds) {
                     if (change.market_key === 'h2h' && typeof change.other_side_odds === 'string' && change.other_side_odds.includes(',')) {
                         // Soccer three-way moneyline - parse comma-separated string and calculate no-vig using all three sides
                         const allOdds = change.other_side_odds.split(',').map(odds => parseFloat(odds));
-                        const noVigPrice = this.calculateThreeWayNoVigPrice(change.new_odds, allOdds);
+                        const noVigPrice = this.calculateThreeWayNoVigPrice(change.current_odds, allOdds);
                         noVigPriceFormatted = this.formatOdds(noVigPrice);
                     } else if (typeof change.other_side_odds === 'string' && !change.other_side_odds.includes(',')) {
                         // Two-way market with string odds - convert to number
                         const otherOdds = parseFloat(change.other_side_odds);
-                        const noVigPrice = this.calculateNoVigPrice(change.new_odds, otherOdds);
+                        const noVigPrice = this.calculateNoVigPrice(change.current_odds, otherOdds);
                         noVigPriceFormatted = this.formatOdds(noVigPrice);
                     } else if (typeof change.other_side_odds === 'number') {
                         // Two-way market with number odds
-                        const noVigPrice = this.calculateNoVigPrice(change.new_odds, change.other_side_odds);
+                        const noVigPrice = this.calculateNoVigPrice(change.current_odds, change.other_side_odds);
                         noVigPriceFormatted = this.formatOdds(noVigPrice);
                     }
                 }
@@ -1272,9 +1272,10 @@ class PinnacleOddsApp {
             const data = await response.json();
             
             if (data.history && data.history.length > 0) {
-                // Update pane title
+                // Update pane title with current odds
+                const currentOddsText = change.current_odds ? ` (Current: ${this.formatOdds(change.current_odds)})` : '';
                 document.getElementById('pane-title').textContent = 
-                    `${change.home_team} vs ${change.away_team} - ${change.team_name}`;
+                    `${change.home_team} vs ${change.away_team} - ${change.team_name}${currentOddsText}`;
                 
                 // Create chart
                 this.createPriceChart(data.history);
@@ -1435,6 +1436,11 @@ class PinnacleOddsApp {
             betSelection = `${change.team_name} ${change.point_value}`;
         }
         document.getElementById('bet-selection').textContent = betSelection;
+        
+        // Show current odds in the modal for reference
+        if (change.current_odds) {
+            document.getElementById('bet-odds').placeholder = `Current: ${this.formatOdds(change.current_odds)}`;
+        }
         
         // Don't auto-fill odds - let user enter manually
         document.getElementById('bet-odds').value = '';

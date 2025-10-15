@@ -23,19 +23,19 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def is_business_hours():
-    """Check if current time is within business hours (1 PM to 1 AM EST)"""
+    """Check if current time is within business hours (9 AM to 9 PM EST)"""
     # EST is UTC-5, EDT is UTC-4 (we'll use UTC-5 for simplicity)
     est_offset = timedelta(hours=-5)
     now_est = datetime.now(timezone.utc) + est_offset
     current_hour = now_est.hour
     
-    # Business hours: 1 PM (13:00) to 1 AM (01:00) next day
-    return current_hour >= 13 or current_hour < 1
+    # Business hours: 9 AM (09:00) to 9 PM (21:00)
+    return 9 <= current_hour < 21
 
 def run_scraper_job():
     """Wrapper function to run the scraper"""
     if not is_business_hours():
-        logger.info("⏰ Outside business hours (1 PM - 1 AM EST), skipping scrape")
+        logger.info("⏰ Outside business hours (9 AM - 9 PM EST), skipping scrape")
         return
         
     try:
@@ -78,7 +78,7 @@ async def cleanup_database():
 def main():
     """Main scheduler function"""
     logger.info("🎯 Pinnacle Odds Scheduler Starting...")
-    logger.info("📅 Will scrape odds every 5 minutes from 1 PM to 1 AM EST")
+    logger.info("📅 Will scrape odds every 5 minutes from 9 AM to 9 PM EST")
     logger.info("💰 Estimated daily cost: ~72,000 API credits (12-hour operation)")
     
     # Schedule the scraper to run every 5 minutes
