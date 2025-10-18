@@ -259,7 +259,7 @@ class DatabaseManager:
              WHERE co.event_id = oc.event_id 
              AND co.market_id = oc.market_id 
              AND co.team_name = oc.team_name
-             AND co.point_value = oc.point_value
+             AND (co.point_value = oc.point_value OR (co.point_value IS NULL AND oc.point_value IS NULL))
              LIMIT 1) as current_odds,
             -- Get the other sides' current odds for no-vig calculation
             CASE 
@@ -280,7 +280,7 @@ class DatabaseManager:
                      WHERE co.event_id = oc.event_id 
                      AND co.market_id = oc.market_id 
                      AND co.team_name != oc.team_name
-                     AND co.point_value = -oc.point_value
+                     AND (co.point_value = -oc.point_value OR (co.point_value IS NULL AND oc.point_value IS NULL))
                      LIMIT 1)
                 WHEN m.market_key = 'totals' THEN
                     -- For totals, get the opposite side (Over vs Under)
@@ -288,7 +288,7 @@ class DatabaseManager:
                      WHERE co.event_id = oc.event_id 
                      AND co.market_id = oc.market_id 
                      AND co.team_name != oc.team_name
-                     AND co.point_value = oc.point_value
+                     AND (co.point_value = oc.point_value OR (co.point_value IS NULL AND oc.point_value IS NULL))
                      LIMIT 1)
                 WHEN m.market_key = 'h2h' THEN
                     -- For non-soccer two-way moneyline, get the other side

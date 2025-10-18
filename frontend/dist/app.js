@@ -695,21 +695,41 @@ class PinnacleOddsApp {
         
                 // Calculate proper no-vig price using current odds (not the old drop odds)
                 let noVigPriceFormatted = '--';
+                
+                // Debug logging to help identify issues
+                if (!change.other_side_odds || !change.current_odds) {
+                    console.log('Missing data for no-vig calculation:', {
+                        other_side_odds: change.other_side_odds,
+                        current_odds: change.current_odds,
+                        team_name: change.team_name,
+                        market_key: change.market_key
+                    });
+                }
+                
                 if (change.other_side_odds && change.current_odds) {
-                    if (change.market_key === 'h2h' && typeof change.other_side_odds === 'string' && change.other_side_odds.includes(',')) {
-                        // Soccer three-way moneyline - parse comma-separated string and calculate no-vig using all three sides
-                        const allOdds = change.other_side_odds.split(',').map(odds => parseFloat(odds));
-                        const noVigPrice = this.calculateThreeWayNoVigPrice(change.current_odds, allOdds);
-                        noVigPriceFormatted = this.formatOdds(noVigPrice);
-                    } else if (typeof change.other_side_odds === 'string' && !change.other_side_odds.includes(',')) {
-                        // Two-way market with string odds - convert to number
-                        const otherOdds = parseFloat(change.other_side_odds);
-                        const noVigPrice = this.calculateNoVigPrice(change.current_odds, otherOdds);
-                        noVigPriceFormatted = this.formatOdds(noVigPrice);
-                    } else if (typeof change.other_side_odds === 'number') {
-                        // Two-way market with number odds
-                        const noVigPrice = this.calculateNoVigPrice(change.current_odds, change.other_side_odds);
-                        noVigPriceFormatted = this.formatOdds(noVigPrice);
+                    try {
+                        if (change.market_key === 'h2h' && typeof change.other_side_odds === 'string' && change.other_side_odds.includes(',')) {
+                            // Soccer three-way moneyline - parse comma-separated string and calculate no-vig using all three sides
+                            const allOdds = change.other_side_odds.split(',').map(odds => parseFloat(odds));
+                            const noVigPrice = this.calculateThreeWayNoVigPrice(change.current_odds, allOdds);
+                            noVigPriceFormatted = this.formatOdds(noVigPrice);
+                        } else if (typeof change.other_side_odds === 'string' && !change.other_side_odds.includes(',')) {
+                            // Two-way market with string odds - convert to number
+                            const otherOdds = parseFloat(change.other_side_odds);
+                            if (!isNaN(otherOdds) && !isNaN(change.current_odds)) {
+                                const noVigPrice = this.calculateNoVigPrice(change.current_odds, otherOdds);
+                                noVigPriceFormatted = this.formatOdds(noVigPrice);
+                            }
+                        } else if (typeof change.other_side_odds === 'number') {
+                            // Two-way market with number odds
+                            if (!isNaN(change.other_side_odds) && !isNaN(change.current_odds)) {
+                                const noVigPrice = this.calculateNoVigPrice(change.current_odds, change.other_side_odds);
+                                noVigPriceFormatted = this.formatOdds(noVigPrice);
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error calculating no-vig price:', error, change);
+                        noVigPriceFormatted = '--';
                     }
                 }
         
