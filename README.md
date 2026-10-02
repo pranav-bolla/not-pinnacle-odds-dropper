@@ -4,30 +4,30 @@ A real-time odds tracking system that monitors Pinnacle odds movements and alert
 
 ## Features
 
-### 🎯 Core Functionality
+### Core Functionality
 - **Real-time Odds Tracking**: Monitors Pinnacle odds across multiple sports and markets
 - **Change Detection**: Automatically detects significant odds movements and drops
 - **WebSocket Updates**: Live updates via WebSocket connections
 - **Historical Data**: Track odds changes over time with detailed history
 
-### 🎨 Beautiful Interface
+### Beautiful Interface
 - **Stock Market Theme**: Dark theme with blacks, greens, and reds
 - **Responsive Design**: Works perfectly on desktop and mobile
 - **Real-time Updates**: Live odds updates with smooth animations
 - **Intuitive Navigation**: Easy-to-use tabs for different views
 
-### 📊 Sports & Markets
+### Sports & Markets
 - **Soccer**: English Premier League, English Championship
 - **American Sports**: NFL, NBA, NHL, MLB, NCAA Football, NCAA Basketball
 - **Markets**: Moneyline, Point Spreads, Over/Under, Alternate markets (for non-soccer sports)
 
-### 🔔 Smart Alerts
+### Smart Alerts
 - **Configurable Thresholds**: Set custom change detection thresholds
 - **Sound Notifications**: Audio alerts for significant changes
 - **Browser Notifications**: Desktop notifications for important updates
 - **Flagged Changes**: Mark important changes for review
 
-### ⏰ Automatic Monitoring
+### Automatic Monitoring
 - **Rescraping Frequency**: Every 5 minutes from 9 AM to 9 PM EST
 - **Change Detection**: Automatically flags odds drops of 5% or more
 - **Real-time Updates**: WebSocket connections provide instant updates
